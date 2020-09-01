@@ -1,0 +1,214 @@
+
+.topHeaderWrapper {
+    background: #7a457d;
+    color: #bdb4bf;
+    font-weight: 400;
+}
+
+.topHeader {
+    /* border: 2px solid pink; */
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1360px;
+
+}
+
+
+/* .topContact{
+    border: 1px solid teal;
+} */
+
+.navInfo {
+    /* border: 1px solid saddlebrown; */
+    width: 65%;
+    text-align: center;
+}
+
+.navWrapper{
+    /* border: 1px solid #888896 */
+    background: #e0e0e2;
+}
+
+.sidenav {
+height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #e0e0e2;
+  overflow-y: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.closeButton {
+position: absolute !important;
+  top: 62px;
+  right: 25px;
+  margin-left: 50px;
+}
+
+.closeButton:hover {
+    cursor: pointer;
+}
+
+.mainHeader {
+    /* border: 3px solid purple; */
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1360px;
+
+}
+
+.findUs {
+    border-radius: 5px;
+    height: 50px;
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #9754a0;
+    transition: all .2s ease-in-out;
+
+}
+
+.findUs:hover{
+    transform: scale(1.05);
+
+}
+
+.findUs a {
+    text-decoration: none;
+    color: #e0e0e2;
+    text-align: center;
+}
+
+.logo{
+    /* border: 2px solid black; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu:hover {
+    cursor: pointer;
+}
+
+.logoPicture {
+    width: 280px;
+    /* height: 90px; */
+    /* border: 1px solid gold; */
+    /* background-size: contain;
+    background-repeat: no-repeat; */
+    background-size: 100% 100%;
+}
+
+.logoPicture img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+.hamburger {
+    /* border: 1px solid aqua; */
+    display: none;
+}
+
+.navLinks {
+    /* border: 1px solid violet; */
+    display: flex;
+    align-items: center;
+    list-style: none;
+    flex-wrap: wrap;
+    min-height: 35px;
+}
+
+.sidebarNav {
+    list-style: none;
+
+}
+
+
+.links {
+    text-decoration: none;
+    padding: 5px;
+    margin: 0 5px;
+    font-weight: 800;
+    color: #7a457d;
+    border-bottom: 5px solid transparent;
+
+
+}
+
+.links:hover {
+    cursor: pointer;
+    border-bottom: 5px solid #814888;
+    border-radius: 5px;
+}
+
+.links:active {
+    border-bottom: 2px solid #814888;
+}
+
+
+@media screen and (max-width: 1149px) {
+    .mainHeader{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .logo{
+        align-self: start;
+    }
+
+    .navLinks{
+        align-self: flex-end;
+    }
+}
+
+@media screen and (max-width: 855px) {
+    .topContact{
+        display: none;
+    }
+    .navInfo{
+        width: 80%;
+    }
+    .logo{
+        width: 100%;
+        align-items: center;
+    }
+    .hamburger{
+        display: inline;
+    }
+    .navLinks{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .mainHeader {
+        min-height: 50px;
+        padding: 0 15px;
+    }    
+
+    .topHeader{
+        padding: 0 15px;
+
+    }
+
+    .logoPicture {
+        width: 180px;
+        height: 40px;
+    }
+       
+}

@@ -1,0 +1,20 @@
+.carousel-slider div {
+    height: 550px;
+}
+
+.carousel-slider img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto !important
+}
+
+.thumbs-wrapper > ul > li > img {
+    width: 100%;
+
+}
+
+@media screen and (max-width: 450px) {
+    .carousel-slider div {
+        height: 60vh;
+    }
+}

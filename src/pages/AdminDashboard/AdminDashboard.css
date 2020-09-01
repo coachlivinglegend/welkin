@@ -1,0 +1,70 @@
+.dashWrap {
+    /* border: 1px solid firebrick; */
+
+    /* padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto; */
+    /* max-width: 1360px; */
+    height: 100vh;
+    display: flex;
+
+}
+
+.adminNav {
+    width: 300px;
+    /* border: 1px solid khaki; */
+    background-color: #e0e0e2;
+}
+
+.adminLogo > .logoPicture {
+    margin: 20px auto;    
+}
+
+/* .adminNav * {
+    margin: 20px 0;
+    box-sizing: border-box;
+} */
+
+.adminMenu {
+    /* border: 1px solid aqua; */
+    margin: 50px 0;
+}
+
+.adminMenuItem {
+    /* border: 1px solid lawngreen; */
+    background-color: #cacace;
+    height: 75px;
+    display: grid;
+    place-items: center;
+    border-left: 5px solid transparent;
+    border-top: 1px solid #e0e0e2;
+    border-bottom: 1px solid #e0e0e2;
+    font-size: 17px;
+    font-weight: 700;
+
+}
+
+.adminActive {
+    background-color: #b5b5ba;
+    color: #7a457d;
+    border-radius: 5px;
+    border-left: 5px solid #7a457d;
+    
+}
+
+.adminActive:hover {
+    border-right: none
+}
+
+.adminMenuItem:hover {
+    cursor: pointer;
+    border-left: 5px solid #7a457d;
+
+}
+
+.adminMain {
+    background-color: #b5b5ba;
+    width: calc(100% - 300px);
+    height: 100vh;
+    overflow-y: scroll;
+}

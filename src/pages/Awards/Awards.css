@@ -1,0 +1,37 @@
+.awardWrapper {
+    background-color: #ffffff;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1360px;
+
+}
+
+.divWrap:nth-child(odd) {
+    background-color: #f9f9f9;
+    /* border: 1px solid olive; */
+}
+
+.divWrap:nth-child(even) {
+    background-color: #f3f3f3;
+    /* border: 1px solid fuchsia; */
+}
+
+
+.divWrap {
+    display: flex;
+}
+.awardTitle {
+    border: 1px solid white;
+    width: 50%;
+    text-align: center;
+}
+.awardPosition {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+    width: 50%;
+    text-align: center;
+
+}
+

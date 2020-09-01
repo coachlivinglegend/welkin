@@ -1,0 +1,101 @@
+.descriptionWrapper {
+    border: 1px solid gold
+}
+
+.descriptionContainer {
+    box-shadow: 0 0.5rem 3.125rem -0.75rem rgba(37,55,110,0.2);
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1360px;
+    border: 1px solid springgreen
+
+
+}
+
+.descriptionDesign {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 100;
+    align-items: center;
+    border: 1px solid red
+}
+
+.descriptionSide {
+    border: 1px solid hotpink;
+}
+
+.descrip {
+    display: flex;
+    width: 200px;
+    height: 75px;
+    border: 1px solid springgreen;
+}
+
+.descrip h3 {
+    color: #7a457d;
+    font-size: 18px;
+    font-weight: 600;
+    
+}
+
+.descrip p {
+    color: #bdb4bf;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+}
+.dicon {
+    width: 40px;
+    height: 40px;
+    margin-right: 25px;
+}
+
+.descriptionText {
+    display: flex;
+    padding: 100px;
+    /* margin: 20px 0; */
+    flex-direction: column;
+    border: 1px solid lightcoral
+
+}
+
+.descriptionText h3 {
+    font-size: 29px;
+    font-weight: 700;
+    letter-spacing: 0px;
+    margin: 0;
+    text-transform: none;
+    /* color: #ffffff; */
+}
+
+.descriptionText span {
+    margin: 15px 0;
+}
+
+.excellence {
+    font-size: 19px;
+    font-weight: 500;
+    font-style: normal;
+    color: #814888;
+}
+
+.descriptionTextWrap {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+}
+
+@media screen and (max-width: 800px) {
+    .descriptionTextWrap {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .descriptionText{
+        padding: 100px 5%;
+    }
+    .descriptionSide {
+        height: 375px;
+    }
+}

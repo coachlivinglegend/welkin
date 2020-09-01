@@ -1,0 +1,112 @@
+.topFooterWrapper {
+    /* border: 1px solid #656565; */
+    background: #392d2e
+}
+
+.topFooter {
+    /* border: 1px solid darkblue; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1360px;
+    color: #e2dee3;
+}
+
+.mapWidget, .facebookWidget {
+    height: 400px;
+    width: 290px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.schoolDetails{
+    /* border: 1px solid #541265; */
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.schoolDetails :nth-child(1n) {
+    margin-bottom: 10px;
+}
+
+.mapWidget {
+    /* border: 1px solid #126685; */
+    margin-right: 10px;
+}
+
+/* #map {
+} */
+
+.facebookWidget {
+    /* border: 1px solid #479516; */
+    margin-right: 10px;
+
+}
+.usefulLinks{
+    width: 250px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.usefulLinksList {
+    list-style: none;
+    padding-left: 0;
+}
+
+.uselinks {
+    text-decoration: none;
+    padding: 5px;
+    margin: 0 5px;
+    font-weight: 800;
+    color: #e2dee3;
+
+}
+
+.uselinks:hover {
+    cursor: pointer;
+    color: white;
+    /* color: green */
+}
+
+.bottomFooterWrapper {
+    /* border: 1px solid #258528; */
+    background: #564546;
+}
+
+
+.bottomFooter {
+    /* border: 1px dashed springgreen; */
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #bdb4bf;
+    max-width: 1360px;
+}
+
+.botLeft{
+    /* border: 1px solid skyblue; */
+}
+
+.botRight {
+    /* border: 1px solid lightcoral */
+}
+
+@media screen and (max-width: 450px) {
+    .topFooter, .bottomFooter{
+        padding: 0 15px;
+    }
+
+    .bottomFooter{
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -1,0 +1,33 @@
+.adminWrapper {
+    border: 1px solid green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1360px;
+
+}
+
+.test {
+    margin: 10px !important;
+}
+
+.btnn {
+    background-color: #7a457d;
+    color: #bdb4bf;
+    margin: 10px;
+    border: 0;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.formAdmin {
+    display: flex;
+    flex-direction: column;
+    margin: 25px 0;
+    width: 66%;
+    border: 1px solid sienna
+}
