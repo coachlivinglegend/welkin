@@ -9,6 +9,7 @@ const GET_MARQUEE = gql`
         homeGalleries(orderBy: createdAt_DESC) {
             id
             imageDescription
+            createdAt
                 image {
                 id
                 url
@@ -16,6 +17,7 @@ const GET_MARQUEE = gql`
         }
     }
 `
+
 
 
 const HomeGallery = () => {
@@ -114,8 +116,6 @@ const HomeGallery = () => {
                             <button onClick={handleUpload} className="saveHeader">ADD A PICTURE</button>
                             <div className="homeImageMini" style={{backgroundImage: `url(${url})`}} />
                             <input type="text" name="description" placeholder="describe the picture" onChange={(e) => setDescription(e.target.value)}/>
-                            {/* <input onChange={} type="file" name="file" id="file" className="inputfile" accept=".jpg, .jpeg, .png"/>
-                            <label className="" htmlFor="file">Upload a picture</label> */}
                             <Mutation mutation={UPLOAD_MARQUEE}>
                                 {
                                     ( updateMarquee ) => (
@@ -135,15 +135,58 @@ const HomeGallery = () => {
                         <div className="removeImage">
                             REMOVE IMAGE
                             <div className="delTable">
-                                <div className="delTableRow">
-                                <div></div>
-                                <div>IMAGE</div>
-                                <div>DESCRIPTION</div>
-                                <div>CREATED AT</div>
-                                <div>DEL</div>
-                                </div>
+                            <div className="delTableRow head">
+                                <div className="tableSN head">S?N</div>
+                                <div className="tableImage head">IMAGE</div>
+                                <div className="tableDesc head">DESCRIPTION</div>
+                                <div className="tableCre head">CREATED AT</div>
+                                <div className="tableDel head">DEL</div>
                             </div>
-                            <button className="saveHeader">SAVE</button>
+                            <Query query={GET_MARQUEE}>
+                                {
+                                    ({ loading, data }) => {
+                                        if (loading) return 'HANG IN THERE BABYYYYY'
+                                        return (
+                                            data.homeGalleries.map(({ id, createdAt, imageDescription, image: { url }}) => {
+                                                const DELETE_PICTURE = gql`
+                                                    mutation {
+                                                        deleteHomeGallery(
+                                                            where: {
+                                                            id: "${id}"
+                                                            }){
+                                                                id   
+                                                    }
+                                                    }
+                                            `
+                                                return (
+                                                    <div className="delTableRow" key={id}>
+                                                        <div className="tableSN">S/N</div>
+                                                        <div className="tableImage" style={{backgroundImage:`url(${url})`}}/>
+                                                        <div className="tableDesc">{imageDescription}</div>
+                                                        <div className="tableCre">{(createdAt.slice(0, 19).split('T')).join(', ')}</div>
+                                                        <Mutation mutation={DELETE_PICTURE}>
+                                                            {
+                                                                ( deletePicture ) => (
+                                                                    <div onClick={() => {
+
+                                                                    deletePicture();
+                                                                    setTimeout(() => {
+                                                                        window.location.reload()
+                                                                    }, 2500)
+
+                                                                    }} className="tableDel">DEL</div>
+                                                                )
+                                                            }
+                                                        </Mutation>
+                                                    </div>
+                                                )
+                                            })
+                                        )
+                                    }
+                                }
+                            </Query>
+                            </div>
+                            <button onClick={() => window.location.reload()} className="saveHeader">SAVER</button>
                         </div>
                     }
                 </div>

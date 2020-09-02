@@ -1,0 +1,22 @@
+.blogPostsWrap {
+    border: 1px solid firebrick;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.blogPostsMainWrap {
+    border: 1px solid teal;
+    display: flex;
+}
+
+/* .tox-tinymce{
+    border: 1px solid green !important;
+    width: 75%
+}
+ */
+.blogEditor{
+    border: 1px solid yellow !important;
+    width: 75%
+}
