@@ -27,6 +27,26 @@ const HomeGallery = () => {
     const [url, setUrl] = useState('')
     const [handle, setHandle] = useState('')
     const [description, setDescription] = useState('')
+
+
+    // mutation {
+    //     createHomeGallery(data: {
+    //           imageDescription: "abc"
+    //       image: {
+    //         create: {
+    //           handle: "4HDTOkwOQkOBdRBjXtcp"
+    //           fileName: "daniella.jpg"
+    //           mimeType: "image/jpeg"
+    //         }
+    //       }
+    //     }){
+    //      id
+    //       image {
+    //         id
+    //         url
+    //       }
+    //     }
+    //   }
     
     const UPLOAD_MARQUEE = gql`
         mutation {

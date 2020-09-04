@@ -33,7 +33,7 @@ const GET_HEADER = gql`
 const Header = () => {
     
     const handleOpen = () => {
-        document.getElementById("mySidenav").style.width = "75%";
+        document.getElementById("mySidenav").style.width = "60%";
     }
 
     const handleClose = () => {
@@ -55,7 +55,7 @@ const Header = () => {
     //   }
 
     return (
-        <header>
+        <header className="homeHeader">
             <div className="topHeaderWrapper">
                 <div className="topHeader">
                     <div className="topContact">

@@ -110,34 +110,36 @@ const BlogPosts = () => {
     //     }
     // }
 
+    const slateAST = [
+      { type: "paragraph", children: [{ text: "A really good shovel." }] }
+    ]
 
     const UPLOAD_POST = gql`
         mutation {
             createBlog(data: {
-            postTitle: "${postHeader}"
+            postTitle: "This is the title of the post"
             postPicture : {
             create: {
-                handle: "${handle}"
-                fileName: "${filename}"
-                mimeType: "${mimetype}"
+                handle: "MPHjLMhgRcOlNRpinSD1"
+                fileName: "20180725_165841.jpg"
+                mimeType: "image/jpeg"
             }
             }
             postBody: {
-                html: "${serialize(value)}"
+              children: "${slateAST}"
             }
         }){
             id
             postTitle
             postPicture {
-            id
-            url
+                id
+                url
             }
             postBody {
-            raw
+                raw
             }
         }
         }
-    
     `
 
     
@@ -211,9 +213,9 @@ const BlogPosts = () => {
                                     e.preventDefault();
                                     // console.log(value[0])
                                     // console.log(editor)
-                                    console.log(serialize(value))
                                     uploadPost()
-                                    // console.log(value)
+                                    console.log(value)
+                                    console.log(initialValue)
                                     
                                 }
                                 }
@@ -346,7 +348,7 @@ const initialValue = [
     {
         type: 'paragraph',
         children: [
-            { text: 'This is editable ' },
+            { text: 'This is not editable ' },
             { text: 'rich', bold: true },
             { text: ' text, ' },
             { text: 'much', italic: true },

@@ -20,7 +20,7 @@ import Admin from './pages/Admin/Admin'
 function App() {
   return (
     <div className="App">
-      {/* <Header/> */}
+      <Header/>
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/awards' component ={Awards}/>

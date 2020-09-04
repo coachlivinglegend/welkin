@@ -6,7 +6,7 @@ import Feedback from '../../components/Feedback/Feedback'
 import Testimonials from '../../components/Testimonials/Testimonials'
 import Description from '../../components/Descrption/Description'
 
-const Home = () => {
+const Home = ({ match }) => {
     useEffect(() => {
         document.title = "Welkin International School - The Future Is Now"
 }, [])
@@ -47,7 +47,7 @@ const Home = () => {
                 
             </div>
 
-            <PostsPreview/>
+            <PostsPreview match={match}/>
             <Testimonials/>
             <Feedback/>
         </div>

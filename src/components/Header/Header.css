@@ -199,7 +199,12 @@ position: absolute !important;
     .mainHeader {
         min-height: 50px;
         padding: 0 15px;
-    }    
+    }
+    /* .homeHeader{
+        position: fixed;
+        width: 100%;
+        top: 0
+    } */
 
     .topHeader{
         padding: 0 15px;
