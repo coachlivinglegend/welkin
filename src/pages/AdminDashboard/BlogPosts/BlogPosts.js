@@ -23,63 +23,6 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
 
 const BlogPosts = () => {
-
-    // const serialize = node => {
-    //     if (Text.isText(node)) {
-    //         return escapeHtml(node.text)
-    //     }
-      
-        
-    //     const children = node.children.map(n => serialize(n)).join('')
-      
-    //     switch (node.type) {
-    //       case 'quote':
-    //         return `<blockquote><p>${children}</p></blockquote>`
-    //       case 'paragraph':
-    //         return `<p>${children}</p>`
-    //       case 'link':
-    //         return `<a href="${escapeHtml(node.url)}">${children}</a>`
-    //       default:
-    //         return children
-    //     }
-    // }
-
-    const serialize = node => {
-        let nodeText = escapeHtml(node.text);
-        if (Text.isText(node)) {
-          if (node["bold"]) {
-            nodeText = `<strong>` + nodeText + `</strong>`;
-          }
-      
-          if (node["italic"]) {
-            nodeText = `<em>` + nodeText + `</em>`;
-          }
-      
-          if (node["underlined"]) {
-            nodeText = `<u>` + nodeText + `</u>`;
-          }
-          // Other marks should go here like above
-          
-          return nodeText;
-        }
-      
-        if (Array.isArray(node)) {
-          return node.map(subNode => serializeSubNode(subNode)).join("");
-        }
-      
-        return serializeSubNode(node);
-      };
-      
-      const serializeSubNode = node => {
-        const children = node.children.map(n => serialize(n)).join("");
-        switch (node.type) {
-          case "link":
-            return `<a href="${escapeHtml(node.url)}">${children}</a>`;
-          default:
-            return `<p>${children}</p>`;
-        }
-      };
-
     
     const [filename, setFilename] = useState('')
     const [mimetype, setMimeType] = useState('')
@@ -92,54 +35,35 @@ const BlogPosts = () => {
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
     const editor = useMemo(() => withHistory(withReact(createEditor())), [])
     const [value, setValue] = useState(initialValue)
+    const preSlug = postHeader.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"") 
+    const slug = (preSlug.replace(/[" "]/g, "-")).toLowerCase()
+
     
-    // {
-    //     blogs {
-    //         id
-    //         postTitle
-    //       	postPicture {
-    //           id
-    //           url
-    //         }
-    //       postBody {
-    //         raw
-    //         html
-    //         text
-    //         markdown
-    //       }
-    //     }
-    // }
-
-    const slateAST = [
-      { type: "paragraph", children: [{ text: "A really good shovel." }] }
-    ]
-
     const UPLOAD_POST = gql`
-        mutation {
-            createBlog(data: {
-            postTitle: "This is the title of the post"
-            postPicture : {
+      mutation ($postBody: RichTextAST!){
+        createBlog(data: {
+          postTitle: "${postHeader}"
+          slug: "${slug}"
+          postPicture : {
             create: {
-                handle: "MPHjLMhgRcOlNRpinSD1"
-                fileName: "20180725_165841.jpg"
-                mimeType: "image/jpeg"
+              handle: "${handle}"
+              fileName: "${filename}"
+              mimeType: "${mimetype}"
             }
-            }
-            postBody: {
-              children: "${slateAST}"
-            }
+          }
+          postBody: $postBody
         }){
+          id
+          postTitle
+          postPicture {
             id
-            postTitle
-            postPicture {
-                id
-                url
-            }
-            postBody {
-                raw
-            }
+            url
+          }
+          postBody {
+            html
+          }
         }
-        }
+      }
     `
 
     
@@ -204,7 +128,10 @@ const BlogPosts = () => {
                         />
                         </Slate>
                     </div>
-                    <Mutation mutation={UPLOAD_POST}>
+                    <Mutation mutation={UPLOAD_POST} 
+                      variables={ 
+                        { postBody :  { children : value } }
+                      }>
                         {
                             ( uploadPost ) => (
                                 <button
@@ -215,7 +142,7 @@ const BlogPosts = () => {
                                     // console.log(editor)
                                     uploadPost()
                                     console.log(value)
-                                    console.log(initialValue)
+                                    // console.log(initialValue)
                                     
                                 }
                                 }

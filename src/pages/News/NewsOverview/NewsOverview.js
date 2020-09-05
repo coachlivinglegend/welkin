@@ -4,6 +4,7 @@ import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
 import '.././News.css'
 import PostPagePreview from '../../../components/PostPagePreview/PostPagePreview'
+import { SpinnerBig } from '../../../components/Spinner/Spinner'
 
 
 const GET_ALLNEWS = gql`
@@ -37,7 +38,7 @@ const NewsOverview = ({ match }) => {
                     <Query query={GET_ALLNEWS}>
                         {
                             ({ loading, data }) => {
-                                if (loading) return "I'M COMING"
+                                if (loading) return <SpinnerBig/>
                                 return (
                                     data.blogs.map(({ id, createdAt, postTitle, slug, postPicture: { url }, postBody: { html }}) => {
                                         return (

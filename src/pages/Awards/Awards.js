@@ -1,5 +1,9 @@
 import React, {useEffect} from 'react';
 import './Awards.css'
+import Header from '../../components/Header/Header'
+import Footer from '../../components/Footer/Footer'
+import award from '../../assets/award.jpg'
+
 
 const Awards = () => {
     useEffect(() => {
@@ -8,10 +12,12 @@ const Awards = () => {
 
     return (
         <div>
-            <h1>Awards</h1>
+        <Header/>
+        <div style={{backgroundImage:`url(${award})`, height:650, backgroundPosition: "center", backgroundReapeat: "no-repeat",  backgroundSize: "cover"}}/>
+        <div>
             <div className="awardWrapper">
-            
-                <div className="divWrap">
+          
+                <div className="divWrap awardTop">
                     <div className="awardTitle">
                         <p>COMPETITION</p>
                     </div>
@@ -300,6 +306,9 @@ const Awards = () => {
                 </div>
             </div>
         </div>
+        <Footer/>
+        </div>
+
     )
 }
 

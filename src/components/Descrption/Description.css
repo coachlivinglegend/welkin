@@ -1,36 +1,38 @@
 .descriptionWrapper {
-    border: 1px solid gold
+    /* border: 1px solid gold */
 }
 
 .descriptionContainer {
-    box-shadow: 0 0.5rem 3.125rem -0.75rem rgba(37,55,110,0.2);
     padding: 0 20px;
     margin-left: auto;
     margin-right: auto;
     max-width: 1360px;
-    border: 1px solid springgreen
+    /* border: 1px solid springgreen */
 
-
+    
 }
 
 .descriptionDesign {
+    box-shadow: 0 0.5rem 3.125rem -0.75rem rgba(37,55,110,0.2);
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     min-height: 100;
     align-items: center;
-    border: 1px solid red
+    padding: 20px 0;
+    /* border: 1px solid red */
 }
 
 .descriptionSide {
-    border: 1px solid hotpink;
+    /* border: 1px solid hotpink; */
 }
 
 .descrip {
     display: flex;
+    align-items: center;
     width: 200px;
     height: 75px;
-    border: 1px solid springgreen;
+    /* border: 1px solid springgreen; */
 }
 
 .descrip h3 {
@@ -47,18 +49,20 @@
     font-style: normal;
 }
 .dicon {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     margin-right: 25px;
+    /* border: 1px solid gold; */
 }
 
 .descriptionText {
     display: flex;
     padding: 100px;
+    color: white;
     /* margin: 20px 0; */
     flex-direction: column;
-    border: 1px solid lightcoral
-
+    background-color: rgba(0, 0, 0, 0.7);
+    /* border: 1px solid lightcoral */
 }
 
 .descriptionText h3 {
@@ -83,7 +87,8 @@
 
 .descriptionTextWrap {
     display: grid;
-    grid-template-columns: 0.8fr 1fr;
+    grid-template-columns: 0.9fr 1fr;
+    margin: 20px 0;
 }
 
 @media screen and (max-width: 800px) {

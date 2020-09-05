@@ -3,6 +3,7 @@ import './HomeGallery.css'
 import { Query, Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost'
 import * as filestack from 'filestack-js'
+import { SpinnerBig } from '../../../components/Spinner/Spinner'
 
 const GET_MARQUEE = gql`
     {
@@ -102,7 +103,7 @@ const HomeGallery = () => {
                         <Query query={GET_MARQUEE}>
                             {
                                 ({ loading, data }) => {
-                                    if (loading) return 'HANG IN THERE BABYYYYY'
+                                    if (loading) return <SpinnerBig/>
                                     return (
                                         data.homeGalleries.map(({ id, image: { url }}) => {
                                             return (
@@ -165,7 +166,7 @@ const HomeGallery = () => {
                             <Query query={GET_MARQUEE}>
                                 {
                                     ({ loading, data }) => {
-                                        if (loading) return 'HANG IN THERE BABYYYYY'
+                                        if (loading) return <SpinnerBig/>
                                         return (
                                             data.homeGalleries.map(({ id, createdAt, imageDescription, image: { url }}) => {
                                                 const DELETE_PICTURE = gql`

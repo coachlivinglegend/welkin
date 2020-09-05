@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import HamburgerMenu from 'react-hamburger-menu'
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
+import {SpinnerSmall } from '../Spinner/Spinner'
 
 const GET_HEADER = gql`
     {
@@ -31,6 +32,18 @@ const GET_HEADER = gql`
 //     }
 //   }
 const Header = () => {
+    
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 90) {
+            document.querySelector('.topHeaderWrapper').style.display = 'none';
+                document.querySelector('.navWrapper').classList.add('navFixed')
+        }
+
+        if (window.pageYOffset < 90) {
+            document.querySelector('.topHeaderWrapper').style.display = 'block'
+                document.querySelector('.navWrapper').classList.remove('navFixed')
+        }
+      });
     
     const handleOpen = () => {
         document.getElementById("mySidenav").style.width = "60%";
@@ -67,7 +80,7 @@ const Header = () => {
                             <Query query={GET_HEADER}>
                                 {
                                     ({ loading, data}) => {
-                                        if (loading) return 'HOLD ON SMALL ABEG'
+                                        if (loading) return <SpinnerSmall/>
                                         return data.homeHeaders[0].header.toUpperCase()
                                     }
                                 }

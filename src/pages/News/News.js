@@ -1,5 +1,8 @@
 import React, {useEffect} from 'react';
 import { Route } from 'react-router-dom'
+import Header from '../../components/Header/Header'
+import Footer from '../../components/Footer/Footer'
+
 
 // import PostPagePreview from '../../components/PostPagePreview/PostPagePreview'
 
@@ -14,9 +17,15 @@ const News = ({ match }) => {
 
     return (
         <div>
+        <Header/>
+
+        <div>
             <Route exact path={`${match.path}`} component={NewsOverview}/>
             <Route path={`${match.path}/:slug`} component={NewsPage}/>
         </div>
+        <Footer/>
+        </div>
+
     )
 }
 

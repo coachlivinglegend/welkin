@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './Feedback.css'
+import fd from '../../assets/feedback.jpg'
 
 const Feedback = () => {
     const [name, setName] = useState('')
@@ -7,13 +8,13 @@ const Feedback = () => {
     const [subject, setSubject] = useState('')
     const [body, setBody] = useState('')
     return (
-        <div className="feedbackContainer">
-            <div className="feedbackWrapper">
+        <div style={{backgroundImage:`url(${fd})`, backgroundPosition: "center", backgroundReapeat: "no-repeat",  backgroundSize: "cover"}} className="feedbackContainer">
+            <div  className="feedbackWrapper">
                 <div className="feedbackOther">
                     skrrrrrrr
                 </div>
                 <div className="formWrap">
-                    <h2>We want to hear from you</h2>
+                    <h2 style={{marginLeft: 20, color: "white"}}>We want to hear from you</h2>
                     <div className="formDiv">
                         <form className="feedbackForm" onSubmit={e => e.preventDefault()}>
                             <input name='name' type='type' value={name} placeholder="Full Name" required onChange={e => setName(e.target.value)}/>

@@ -22,16 +22,16 @@ const client = new ApolloClient({
   cache,
 })
 
-client.query({
-  query: gql`
-    {
-      homeHeaders {
-        id
-        header
-      }
-    }
-  `
-}).then(response => console.log(response.data))
+// client.query({
+//   query: gql`
+//     {
+//       homeHeaders {
+//         id
+//         header
+//       }
+//     }
+//   `
+// }).then(response => console.log(response.data))
 
 
 

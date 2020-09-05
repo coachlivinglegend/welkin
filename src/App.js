@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from "react-router-dom";
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
 import Home from './pages/Home/Home'
 import Awards from './pages/Awards/Awards'
 import AboutUs from './pages/AboutUs/AboutUs'
@@ -20,7 +18,6 @@ import Admin from './pages/Admin/Admin'
 function App() {
   return (
     <div className="App">
-      <Header/>
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/awards' component ={Awards}/>
@@ -34,7 +31,6 @@ function App() {
           <Route path='/portal' component ={Portal}/>
           <Route path ='/admin' component ={Admin}/>
         </Switch>
-      {/* <Footer/> */}
     </div>
   );
 }

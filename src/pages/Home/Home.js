@@ -5,6 +5,9 @@ import PostsPreview from '../../components/PostsPreview/PostsPreview'
 import Feedback from '../../components/Feedback/Feedback'
 import Testimonials from '../../components/Testimonials/Testimonials'
 import Description from '../../components/Descrption/Description'
+import Header from '../../components/Header/Header'
+import Footer from '../../components/Footer/Footer'
+
 
 const Home = ({ match }) => {
     useEffect(() => {
@@ -12,6 +15,9 @@ const Home = ({ match }) => {
 }, [])
 
     return (
+        <div>
+        <Header/>
+
         <div className="HomeWrapper">
             <Hero/>
             <Description/>
@@ -47,10 +53,16 @@ const Home = ({ match }) => {
                 
             </div>
 
-            <PostsPreview match={match}/>
+            <div className="newsposthome">
+                <h3 className="posth3">NEWS</h3>
+                <PostsPreview classname="newshome" match={match}/>
+            </div>
             <Testimonials/>
             <Feedback/>
         </div>
+        <Footer/>
+        </div>
+
     )
 }
 

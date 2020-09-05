@@ -11,10 +11,10 @@
 }
 
 .aboutUs {
-    width: 70%;
+    /* width: 70%; */
     /* border: 1px solid gray; */
     text-align: center;
-    margin: 20px 0;
+    margin: 20px 50px;
     padding: 20px;
 }
 
@@ -44,4 +44,23 @@
 .inactive {
     background-color: #f7f7f7;
     color: #8d8d8d;
+}
+
+.aboutTextWrap {
+    font-size: 20px;
+    line-height: 1.6em;
+}
+
+.aboutText {
+    text-align: left;
+    padding: 10px;
+}
+
+.aboutFoundPic {
+    background-color: blue;
+    width: 275px;
+    height: 410px;
+    margin: 5px 20px 5px 0;
+    float: left;
+    /* display: inline-block; */
 }

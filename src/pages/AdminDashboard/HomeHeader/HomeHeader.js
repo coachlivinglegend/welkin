@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './HomeHeader.css'
 import { Query, Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost'
+import { SpinnerBig } from '../../../components/Spinner/Spinner'
 
 const GET_HEADER = gql`
     {
@@ -42,7 +43,7 @@ const HomeHeader = () => {
                     <Query query={GET_HEADER}>
                         {
                             ({ loading, data}) => {
-                                if (loading) return 'HOLD ON SMALL ABEG'
+                                if (loading) return <SpinnerBig/>
                                 return data.homeHeaders[0].header.toUpperCase()
                             }
                         }

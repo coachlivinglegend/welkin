@@ -3,6 +3,7 @@ import './NewsPage.css'
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
 import PostPage from '../../../components/PostPage/PostPage'
+import { SpinnerBig } from '../../../components/Spinner/Spinner'
 
 const GET_ONEPOST = gql`
     query blog($slug: String!) {
@@ -23,15 +24,13 @@ const GET_ONEPOST = gql`
 `
 
 const NewsPage = ({ match }) => {
-    console.log(match)
     return (
         <div>
             <Query query={GET_ONEPOST} variables={{ slug: match.params.slug }}>
                 {
                     ({ loading, data, error }) => {
-                        if (loading) return "I'M COMING"
+                        if (loading) return <SpinnerBig/>
                         if (error) return "ERROR"
-                        console.log(data)
                         const {  id, createdAt, postTitle, postPicture: { url }, postBody: { html } } = data.blog
                         document.title = postTitle
                         return (

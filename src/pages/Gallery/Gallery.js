@@ -1,6 +1,9 @@
 import React, {useEffect} from 'react';
 import './Gallery.css'
 import Gallery from 'react-grid-gallery';
+import Header from '../../components/Header/Header'
+import Footer from '../../components/Footer/Footer'
+
 
 const GalleryPage = () => {
     useEffect(() => {
@@ -162,10 +165,16 @@ const GalleryPage = () => {
 
 
     return (
+        <div>
+        <Header/>
+
         <div className="galleryWrapper">
             <h1>Gallery</h1>
             <Gallery images={IMAGES}/>
         </div>
+        <Footer/>
+        </div>
+
     )
 }
 

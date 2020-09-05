@@ -4,6 +4,12 @@ import schoolban from '../../assets/wclogofull.png'
 import { Link } from 'react-router-dom'
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import Iframe from 'react-iframe'
+import { ReactComponent as IcoG } from '../../assets/socials/google-plus.svg'
+import { ReactComponent as IcoF } from '../../assets/socials/facebook.svg'
+import { ReactComponent as IcoI } from '../../assets/socials/instagram.svg'
+import { ReactComponent as IcoT } from '../../assets/socials/twitter.svg'
+import { ReactComponent as IcoY } from '../../assets/socials/youtube.svg'
+
 
 
 const Footer = ({ google }) => {
@@ -34,7 +40,13 @@ const Footer = ({ google }) => {
                     <span>+234 8023274058</span>
                     <div>
                         <p>Connect With Us</p>
-                        <span>F, T, G, L</span>
+                        <span style={{display: "flex", justifyContent: "space-between", height: 40}}>
+                        <a href='#' target="_blank"><IcoG/></a>
+                        <a href='#' target="_blank"><IcoF/></a>
+                        <a href='#' target="_blank"><IcoI/></a>
+                        <a href='#' target="_blank"><IcoT/></a>
+                        <a href='#' target="_blank"><IcoY/></a>
+                        </span>
                     </div>
                 </div>
                 <div className="mapWidget">

@@ -32,6 +32,8 @@
 .navWrapper{
     /* border: 1px solid #888896 */
     background: #e0e0e2;
+    transition: all .5s ease;
+
 }
 
 .sidenav {
@@ -200,11 +202,12 @@ position: absolute !important;
         min-height: 50px;
         padding: 0 15px;
     }
-    /* .homeHeader{
+    .navFixed{
         position: fixed;
         width: 100%;
-        top: 0
-    } */
+        top: 0;
+        z-index: 5 
+    }
 
     .topHeader{
         padding: 0 15px;

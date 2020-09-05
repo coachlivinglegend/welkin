@@ -2,12 +2,10 @@ import React from 'react';
 import './Hero.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import p1 from '../../assets/hero/1.png';
-import p2 from '../../assets/hero/2.jpg'
-import p3 from '../../assets/hero/3.jpg'
 
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
+import { SpinnerBig } from '../Spinner/Spinner'
 
 const GET_MARQUEE = gql`
     {
@@ -27,7 +25,7 @@ const Hero = () => {
         <Query query={GET_MARQUEE}>
             {
                 ({loading, data}) => {
-                    if (loading) return 'HOLD ON WE GOING HOME'
+                    if (loading) return <SpinnerBig/>
                     return (
                         <div>
                             <Carousel autoPlay infiniteLoop interval={5000}>

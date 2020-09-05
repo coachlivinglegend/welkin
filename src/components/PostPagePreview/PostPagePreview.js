@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import './PostPagePreview.css'
 
 const PostPagePreview = ({ date, title, slug, imageUrl, body, match }) => {
-    console.log(match)
     const newDate = new Date((`${date}`).slice(0,10))
     const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newDate)
     const month = new Intl.DateTimeFormat('en', { month: 'long' }).format(newDate)
