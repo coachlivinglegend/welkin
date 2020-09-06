@@ -1,4 +1,5 @@
 import React from 'react';
+// import './webpack.config'
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
@@ -21,6 +22,7 @@ const client = new ApolloClient({
   link: httpLink,
   cache,
 })
+
 
 // client.query({
 //   query: gql`

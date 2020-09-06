@@ -13,7 +13,9 @@ const Awards = () => {
     return (
         <div>
         <Header/>
-        <div style={{backgroundImage:`url(${award})`, height:650, backgroundPosition: "center", backgroundReapeat: "no-repeat",  backgroundSize: "cover"}}/>
+        <div>
+            <img style={{maxWidth: "100%"}} src={award} alt=''/>
+        </div>
         <div>
             <div className="awardWrapper">
           

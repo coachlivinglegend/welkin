@@ -12,8 +12,8 @@ const GalleryPage = () => {
 
     const IMAGES =
     [{
-            src: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
-            thumbnail: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
+            src: `${require('../../assets/decleft.jpg')}`,
+            thumbnail: `${require('../../assets/decleft.jpg')}`,
             thumbnailWidth: 320,
             thumbnailHeight: 174,
             caption: "After Rain (Jeshu John - designerspics.com)"
@@ -161,13 +161,12 @@ const GalleryPage = () => {
             thumbnailWidth: 320,
             thumbnailHeight: 212
     }]
-
-
-
+    // C:\Users\Daniel Beckley\Desktop\schoolwebsite\welkin\welkin\src\assets\decleft.jpg
+    // src\assets\decleft.jpg
+    // src\assets\decleft.jpg
     return (
         <div>
         <Header/>
-
         <div className="galleryWrapper">
             <h1>Gallery</h1>
             <Gallery images={IMAGES}/>
