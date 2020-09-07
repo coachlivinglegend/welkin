@@ -250,62 +250,6 @@ const Awards = () => {
                         <p>1st position in 4 x 100m Relay – race (male) </p>
                     </div>
                 </div>
-                <div className="divWrap">
-                    <div className="awardTitle">
-                        COMPETITION
-                    </div>
-                    <div className="awardPosition">
-                        POSITION
-                    </div>
-                </div>
-                <div className="divWrap">
-                    <div className="awardTitle">
-                        COMPETITION
-                    </div>
-                    <div className="awardPosition">
-                        POSITION
-                    </div>
-                </div>
-                <div className="divWrap">
-                    <div className="awardTitle">
-                        COMPETITION
-                    </div>
-                    <div className="awardPosition">
-                        POSITION
-                    </div>
-                </div>
-                <div className="divWrap">
-                    <div className="awardTitle">
-                        COMPETITION
-                    </div>
-                    <div className="awardPosition">
-                        POSITION
-                    </div>
-                </div>
-                <div className="divWrap">
-                    <div className="awardTitle">
-                        COMPETITION
-                    </div>
-                    <div className="awardPosition">
-                        POSITION
-                    </div>
-                </div>
-                <div className="divWrap">
-                    <div className="awardTitle">
-                        COMPETITION
-                    </div>
-                    <div className="awardPosition">
-                        POSITION
-                    </div>
-                </div>
-                <div className="divWrap">
-                    <div className="awardTitle">
-                        COMPETITION
-                    </div>
-                    <div className="awardPosition">
-                        POSITION
-                    </div>
-                </div>
             </div>
         </div>
         <Footer/>

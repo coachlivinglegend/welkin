@@ -57,10 +57,12 @@
 }
 
 .aboutFoundPic {
-    background-color: blue;
     width: 275px;
-    height: 410px;
     margin: 5px 20px 5px 0;
     float: left;
     /* display: inline-block; */
+}
+
+.aboutFoundPic img{
+    width: 100%
 }

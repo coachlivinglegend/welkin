@@ -1,5 +1,4 @@
 import React from 'react';
-// import './webpack.config'
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
@@ -34,8 +33,6 @@ const client = new ApolloClient({
 //     }
 //   `
 // }).then(response => console.log(response.data))
-
-
 
 ReactDOM.render(
   <ApolloProvider client={client}>

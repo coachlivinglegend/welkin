@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './AboutUs.css'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
+import found from '../../assets/founder.jpg'
 
 const AboutUs = () => {
     useEffect(() => {
@@ -59,7 +60,9 @@ const AboutUs = () => {
 
                             :
                                 <div className="aboutText">
-                                    <div className="aboutFoundPic"></div>
+                                    <div className="aboutFoundPic">
+                                        <img src={found} alt='Our Founder'/>
+                                    </div>
                                     <p>Mr. Beckley Francis Adebayo is the chairman of Welkin Intenational School, he holds a B.Sc in Banking and Finance, Chatered Acoountant, 
                                     Chartered Banker and M.Sc Finance(Unilag).</p>
                                     <p>He has vast experience in Mortgage Banking, a former University Don, Director of Fabulous Properties Ltd, At Thy WOrd Farm Food and Agriculaytural
