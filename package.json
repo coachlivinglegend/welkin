@@ -1,7 +1,6 @@
 {
   "name": "welkin",
   "version": "0.1.0",
-  "homepage": "https://coachlivinglegend.github.io/welkin/",
   "private": true,
   "dependencies": {
     "-": "0.0.1",
