@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/welkin/static/css/main.09a54092.chunk.css",
-    "main.js": "/welkin/static/js/main.7f1ebfa1.chunk.js",
-    "main.js.map": "/welkin/static/js/main.7f1ebfa1.chunk.js.map",
+    "main.js": "/welkin/static/js/main.29dd6f52.chunk.js",
+    "main.js.map": "/welkin/static/js/main.29dd6f52.chunk.js.map",
     "runtime-main.js": "/welkin/static/js/runtime-main.aa5d74b2.js",
     "runtime-main.js.map": "/welkin/static/js/runtime-main.aa5d74b2.js.map",
     "static/css/2.fb346933.chunk.css": "/welkin/static/css/2.fb346933.chunk.css",
     "static/js/2.43c879aa.chunk.js": "/welkin/static/js/2.43c879aa.chunk.js",
     "static/js/2.43c879aa.chunk.js.map": "/welkin/static/js/2.43c879aa.chunk.js.map",
     "index.html": "/welkin/index.html",
-    "precache-manifest.5e4e4263da977edd258589b4426c7074.js": "/welkin/precache-manifest.5e4e4263da977edd258589b4426c7074.js",
+    "precache-manifest.5f41c36804df3ddf577a24902b2fba11.js": "/welkin/precache-manifest.5f41c36804df3ddf577a24902b2fba11.js",
     "service-worker.js": "/welkin/service-worker.js",
     "static/css/2.fb346933.chunk.css.map": "/welkin/static/css/2.fb346933.chunk.css.map",
     "static/css/main.09a54092.chunk.css.map": "/welkin/static/css/main.09a54092.chunk.css.map",
@@ -40,6 +40,6 @@
     "static/css/2.fb346933.chunk.css",
     "static/js/2.43c879aa.chunk.js",
     "static/css/main.09a54092.chunk.css",
-    "static/js/main.7f1ebfa1.chunk.js"
+    "static/js/main.29dd6f52.chunk.js"
   ]
 }
