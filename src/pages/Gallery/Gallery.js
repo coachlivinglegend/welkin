@@ -7,8 +7,10 @@ import Footer from '../../components/Footer/Footer'
 
 
 const GalleryPage = () => {
-    const [imagesToLoop, setImagesToLoop] = useState([]) 
+    const [imagesToLoop, setImagesToLoop] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
+
         document.title = "Gallery - Welkin International School";
         function randomIntFromInterval(min, max) { // min and max included 
             return Math.floor(Math.random() * (max - min + 1) + min);
@@ -25,6 +27,7 @@ const GalleryPage = () => {
                 })
             })
             setImagesToLoop(imagesArray)
+            setIsLoading(false)
         })
 }, [])
 
@@ -34,11 +37,11 @@ const GalleryPage = () => {
         <div className="galleryWrapper">
             <h1>Gallery</h1>
             {
-                imagesToLoop 
+                isLoading
                 ?
-                <Gallery images={imagesToLoop}/>
-                :
                 <SpinnerBig/>
+                :
+                <Gallery images={imagesToLoop}/>
             }
         </div>
         <Footer/>
