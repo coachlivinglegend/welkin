@@ -3,10 +3,12 @@ import './AboutUs.css'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import found from '../../assets/founder.jpg'
+import axios from 'axios'
+
 
 const AboutUs = () => {
     useEffect(() => {
-        document.title = "About Us - Welkin International School"
+        document.title = "About Us - Welkin International School";
     }, [])
 
     const [isSelected, setIsSelected] = useState(1)
