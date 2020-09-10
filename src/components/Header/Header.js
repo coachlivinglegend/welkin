@@ -119,18 +119,18 @@ const Header = () => {
 
             <div className="sidenav" id="mySidenav">
             <HamburgerMenu isOpen={true} menuClicked={handleClose} className="closeButton" width={18} height={15} color='#7a457d'/>
-            <div style={{}}>
+            <div>
                 <ul className="sidebarNav">
-                    <Link className='links' to ='/'><li onClick={handleClose}>Home</li></Link>
-                    <Link className='links' to ='/aboutus'><li onClick={handleClose}>About Us</li></Link>
-                    <Link className='links' to ='/awards'><li onClick={handleClose}>Awards</li></Link>
-                    <Link className='links' to ='/admissions'><li onClick={handleClose}>Admissions</li></Link>
-                    <Link className='links' to ='/gallery'><li onClick={handleClose}>Gallery</li></Link>
-                    <Link className='links' to ='/news'><li onClick={handleClose}>News</li></Link>
-                    <Link className='links' to ='/careers'><li onClick={handleClose}>Careers</li></Link>
-                    <Link className='links' to ='/welkinpedia'><li onClick={handleClose}>Welkinpedia</li></Link>
-                    <Link className='links' to ='/contactus'><li onClick={handleClose}>Contact Us</li></Link>
-                    <Link className='links' to ='/portal'><li onClick={handleClose}>Portal</li></Link>
+                    <Link className='linksm' to ='/'><li onClick={handleClose}>Home</li></Link>
+                    <Link className='linksm' to ='/aboutus'><li onClick={handleClose}>About Us</li></Link>
+                    <Link className='linksm' to ='/awards'><li onClick={handleClose}>Awards</li></Link>
+                    <Link className='linksm' to ='/admissions'><li onClick={handleClose}>Admissions</li></Link>
+                    <Link className='linksm' to ='/gallery'><li onClick={handleClose}>Gallery</li></Link>
+                    <Link className='linksm' to ='/news'><li onClick={handleClose}>News</li></Link>
+                    <Link className='linksm' to ='/careers'><li onClick={handleClose}>Careers</li></Link>
+                    <Link className='linksm' to ='/welkinpedia'><li onClick={handleClose}>Welkinpedia</li></Link>
+                    <Link className='linksm' to ='/contactus'><li onClick={handleClose}>Contact Us</li></Link>
+                    <Link className='linksm' to ='/portal'><li onClick={handleClose}>Portal</li></Link>
                 </ul>
             </div>
             </div>
