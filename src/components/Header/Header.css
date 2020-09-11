@@ -21,7 +21,7 @@
 .landingPageInfo{
     width: 500px;
     height: 500px;
-    background: #efefef;
+    background: white;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -39,9 +39,18 @@
     width: 50px;
     position: absolute;
     right: 0;
+    top: 0;
     cursor: pointer;
     color: #e0e0e2;
     padding: 2.5px 5px;
+}
+
+.landingPageContent{
+    border: 1px solid gold;
+    /* position: relative; */
+    margin: 40px 40px;
+    line-height: 30px;
+    color: black ;
 }
 
 @media screen and (max-width: 700px) {
@@ -63,7 +72,7 @@
 .navWrapper{
     /* border: 1px solid #888896 */
     background: #e0e0e2;
-    transition: all .5s ease;
+    transition: all 0.5s ease;
 
 }
 

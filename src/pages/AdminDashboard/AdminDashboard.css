@@ -14,10 +14,70 @@
     width: 300px;
     /* border: 1px solid khaki; */
     background-color: #e0e0e2;
+    transition: 0.5s;
 }
 
 .adminLogo > .logoPicture {
     margin: 20px auto;    
+}
+
+.toggleMenu {
+    display: block !important;
+    width: 300px;
+}
+
+.toggleAdminLogo {
+    display: none !important;
+}
+
+.mainHeaderForMob{
+    padding: 10px;
+}
+
+.adminNavMobile{
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .dashWrap{
+        /* flex-direction: column; */
+    }
+
+    .adminNav{
+        display: none;
+        transition: 0.5s;
+        width: 300px;
+        z-index: 10;
+
+    }
+
+    .adminMain{
+        width: 100% !important;
+    }
+
+
+    .toggleAdminMain{
+        width: calc(100% - 300px) !important;
+    }
+
+    .adminNavMobile{
+        display: block;
+        /* position: fixed;
+        z-index: 50;
+        top: 70;
+        right: 0;
+        overflow-y: hidden;
+        transition: 0.5s;       */
+    }
+
+    .adminMenu {
+        margin-top: 10px !important;
+    }
+
+    .adminMenuItem {
+        margin: 10px 0
+    }
+    
 }
 
 /* .adminNav * {

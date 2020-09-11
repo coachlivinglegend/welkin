@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './HomeHeader.css'
 import { Query, Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost'
-import { SpinnerBig } from '../../../components/Spinner/Spinner'
+import { SpinnerSmall } from '../../../components/Spinner/Spinner'
 
 const GET_HEADER = gql`
     {
@@ -39,11 +39,13 @@ const HomeHeader = () => {
             </div>
             <div className="currentHeader">
                 <h3> This is the current homepage header </h3>
-                <h4> 
+                <h4 style={{
+                    border: "1px solid #7a457d", padding: "10px", boxShadow: "0 0.5rem 3.125rem -0.75rem rgba(37,55,110,0.2)"
+                }}> 
                     <Query query={GET_HEADER}>
                         {
                             ({ loading, data}) => {
-                                if (loading) return <SpinnerBig/>
+                                if (loading) return <SpinnerSmall/>
                                 return data.homeHeaders[0].header.toUpperCase()
                             }
                         }
@@ -52,14 +54,15 @@ const HomeHeader = () => {
             </div>
             <div className="newHeader">
                 <h3>Input the new header you want below</h3>
-                <textarea onChange={(event) => setNewHeader(event.target.value)} className="inputHeader"/>
+                <textarea value={newHeader} onChange={(event) => setNewHeader(event.target.value)} className="inputHeader"/>
                 <Mutation mutation={UPDATE_HEADER}>
                         {
                             ( updateHeader ) => (                                
                                 <button 
                                 onClick={(event) => {
                                     event.preventDefault();
-                                    updateHeader ()
+                                    updateHeader ();
+                                    setTimeout(() => { setNewHeader('') }, 2500)
                                 }} 
                                 className="saveHeader"
                                 >

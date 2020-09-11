@@ -95,6 +95,20 @@ const HomeGallery = () => {
         client.picker(options).open();
     }
 
+    const afterDel = (id) => {
+        const div = Array.from(document.querySelectorAll('.delTableRow'))
+        console.log({id: id})
+        console.log({div: div})
+        for (const aDiv of div) {
+            console.log(aDiv.dataset.id)
+            console.log(aDiv)
+            if (aDiv.dataset.id === id) {
+                console.log(aDiv.dataset.id)
+                aDiv.classList.add('afterDel')
+            }
+        }
+    }
+
     return (
         <div className="homeGallWrap">
             <div>
@@ -136,7 +150,7 @@ const HomeGallery = () => {
                             ADD IMAGE
                             <button onClick={handleUpload} className="saveHeader">ADD A PICTURE</button>
                             <div className="homeImageMini" style={{backgroundImage: `url(${url})`}} />
-                            <input type="text" name="description" placeholder="describe the picture" onChange={(e) => setDescription(e.target.value)}/>
+                            <input type="text" name="description" placeholder="Add a description for the picture" onChange={(e) => setDescription(e.target.value)}/>
                             <Mutation mutation={UPLOAD_MARQUEE}>
                                 {
                                     ( updateMarquee ) => (
@@ -156,8 +170,7 @@ const HomeGallery = () => {
                         <div className="removeImage">
                             REMOVE IMAGE
                             <div className="delTable">
-                            <div className="delTableRow head">
-                                <div className="tableSN head">S?N</div>
+                            <div className="delTableRow">
                                 <div className="tableImage head">IMAGE</div>
                                 <div className="tableDesc head">DESCRIPTION</div>
                                 <div className="tableCre head">CREATED AT</div>
@@ -178,27 +191,24 @@ const HomeGallery = () => {
                                                                 id   
                                                     }
                                                     }
-                                            `
+                                                `
                                                 return (
-                                                    <div className="delTableRow" key={id}>
-                                                        <div className="tableSN">S/N</div>
+                                                    <div className="delTableRow" data-id={id} key={id}>
                                                         <div className="tableImage" style={{backgroundImage:`url(${url})`}}/>
                                                         <div className="tableDesc">{imageDescription}</div>
                                                         <div className="tableCre">{(createdAt.slice(0, 19).split('T')).join(', ')}</div>
-                                                        <Mutation mutation={DELETE_PICTURE}>
-                                                            {
-                                                                ( deletePicture ) => (
-                                                                    <div onClick={() => {
-
-                                                                    deletePicture();
-                                                                    setTimeout(() => {
-                                                                        window.location.reload()
-                                                                    }, 2500)
-
-                                                                    }} className="tableDel">DEL</div>
-                                                                )
-                                                            }
-                                                        </Mutation>
+                                                        <div className="tableDel">
+                                                            <Mutation mutation={DELETE_PICTURE}>
+                                                                {
+                                                                    ( deletePicture ) => (
+                                                                        <i onClick={() => {
+                                                                            // deletePicture();
+                                                                            afterDel(id)
+                                                                        }} class="fas fa-trash iconDel"></i>                                                                        
+                                                                    )
+                                                                }
+                                                            </Mutation>
+                                                        </div>
                                                     </div>
                                                 )
                                             })
@@ -207,7 +217,7 @@ const HomeGallery = () => {
                                 }
                             </Query>
                             </div>
-                            <button onClick={() => window.location.reload()} className="saveHeader">SAVER</button>
+                            <button onClick={() => window.location.reload()} className="saveHeader delPicButt">SAVE</button>
                         </div>
                     }
                 </div>

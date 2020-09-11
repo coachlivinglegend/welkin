@@ -141,10 +141,9 @@ const Header = () => {
             </div>
             </div>
             <div className="landingPageInfo">
-                <div style={{position: "relative"}}>
+                <div>
                     <div className="landingClose"><span onClick={() => document.querySelector('.landingPageInfo').style.display = "none"}>CLOSE</span></div>
-                    <div className="landingPageContent">
-                    </div>
+                    <div className="landingPageContent"></div>
                 </div>
             </div>
         </header>
