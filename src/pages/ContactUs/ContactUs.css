@@ -4,7 +4,7 @@
 }
 
 .contactTopInfo{
-    background: #e0e0e2;
+    background: #d4d4d4;
     padding: 30px;
     /* border: 1px solid greenyellow; */
 }
@@ -61,8 +61,8 @@
     margin: 20px auto;
 }
 
-.contactForm > input, textarea, input[type='submit'] {
-    width: 100%;
+.contactForm > input, .contactForm textarea, .contactForm input[type='submit'] {
+    width: 75%;
 }
 
 .contactFormWrap h2{

@@ -38,10 +38,9 @@
 }
 
 .feedbackForm {
-    /* border: 2px solid black; */
     display: flex;
     flex-direction: column;
-    width: 80%;
+    /* width: 80%; */
     margin: 20px 20px;
 }
 
@@ -57,16 +56,21 @@
 
 .feedbackForm > input[type='submit'] {
     background-color:#7a457d;
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
     color: white;
+}
+
+.feedbackWrapper .feedbackForm textarea {
+    height: 100px;
+    padding: 15px 25px;
+    font-size: 16px;
 }
 
 .feedbackForm > textarea {
     height: 100px;
     padding: 15px 25px;
     font-size: 16px;
-
 }
 
 .feedbackForm > input[type='submit']:hover {

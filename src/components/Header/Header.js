@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Header.css'
 import schoolban from '../../assets/wclogofull.png' 
 import { Link } from 'react-router-dom'
@@ -32,6 +32,12 @@ const GET_HEADER = gql`
 //     }
 //   }
 const Header = () => {
+    useEffect(() => {
+        if (!document.querySelector('.landingPageContent').innerHTML) {
+            document.querySelector('.landingPageInfo').style.display = "none"
+        }
+    }, [])
+
     
     window.addEventListener('scroll', function() {
         if (window.pageYOffset > 90) {
@@ -133,6 +139,13 @@ const Header = () => {
                     <Link className='linksm' to ='/portal'><li onClick={handleClose}>Portal</li></Link>
                 </ul>
             </div>
+            </div>
+            <div className="landingPageInfo">
+                <div style={{position: "relative"}}>
+                    <div className="landingClose"><span onClick={() => document.querySelector('.landingPageInfo').style.display = "none"}>CLOSE</span></div>
+                    <div className="landingPageContent">
+                    </div>
+                </div>
             </div>
         </header>
     )

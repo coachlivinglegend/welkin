@@ -106,18 +106,17 @@
     font-weight: 500;
     letter-spacing: .5px;
     text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+
 }
 
 .readMore:hover{
-    color: #7a457d
+    color: #7a457d;
+    border-bottom: 1px solid #9754a0;
 }
 
 .readLink{
     text-decoration: none;
-}
-
-.readLink:hover{
-    text-decoration: underline;
 }
 
 .readingTime {

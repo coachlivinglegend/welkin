@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
-    color: #bdb4bf;
+    color: #e3dae5;
     padding: 0 20px;
     margin-left: auto;
     margin-right: auto;
@@ -76,10 +76,11 @@
 
 
 .abitHeader {
-    color: white
+    color: white;
+    font-size: 20px;
 }
 
 .abitBody {
-    font-size: 15px;
+    font-size: 16px;
     padding: 20px;
 }

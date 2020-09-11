@@ -75,7 +75,7 @@ const [body, setBody] = useState('')
                             <div className="contactTopMain">
                                 <p><a href="#map">Get directions to Welkin</a> <br/>
                                 <div>
-                                    asdfg
+                                    {/* asdfg */}
                                 </div>
                                 </p>
                             </div>

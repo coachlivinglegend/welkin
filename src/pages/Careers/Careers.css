@@ -6,7 +6,7 @@
 }
 
 .careerForm {
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 
 .formTop{
@@ -26,6 +26,13 @@
     padding: 15px 25px;
     font-size: 16px;
     min-width: 40%;
+}
+
+
+@media screen and (max-width: 700px) {
+    .careerForm input {
+        width: 100%;
+    }
 }
 
 .careerForm input:last-child {

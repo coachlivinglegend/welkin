@@ -48,7 +48,7 @@ const Careers = () => {
             </div>
             <div>
             <h2>Fill in the form below to submit your CV.</h2>
-                <form className="careerForm" onSubmit={e => e.preventDefault()}>
+                <form className="careerForm feedbackForm" onSubmit={e => e.preventDefault()}>
                     <div className="formTop">
                         <input name='firstname' type='type' value={firstName} placeholder="First Name" required onChange={e => setFirstName(e.target.value)}/>
                         <input name='lastname' type='type' value={lastName} placeholder="Last Name" required onChange={e => setLastName(e.target.value)}/>
@@ -59,7 +59,7 @@ const Careers = () => {
                     <div>
                         <textarea name='coverletter' value={body} placeholder="Cover Letter" required onChange={e => setBody(e.target.value)}/>
                     </div>
-                    <span style={{marginLeft: 20}}>Submit your CV in doc, docx or pdf format and must not be more than 1MB in size.</span>
+                    <span style={{marginLeft: 20}}>Submit your CV in doc, docx or pdf format and must <br/> not be more than 1MB in size.</span>
                     <input style={{marginTop: 0}} type="file"/>
                     <div style={{marginTop: 0}}>
                         <input type='submit' value='Submit'/>
