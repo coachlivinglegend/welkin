@@ -1,0 +1,15 @@
+.cloudButton {
+    width: 250px;
+    background-color: #7a457d;
+    border: none;
+    margin: 10px auto;
+}
+
+.galeryPP{
+    height: calc(100vh - 110px);
+    width: 95%;
+    border: 2px solid #7a457d       ;
+    margin: 10px auto 0px auto;
+    padding: 10px;
+    overflow-y: auto;
+}

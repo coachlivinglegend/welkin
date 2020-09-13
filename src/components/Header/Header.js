@@ -5,7 +5,37 @@ import { Link } from 'react-router-dom'
 import HamburgerMenu from 'react-hamburger-menu'
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost'
-import {SpinnerSmall } from '../Spinner/Spinner'
+import {SpinnerSmall, SpinnerBig } from '../Spinner/Spinner'
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
+import { createHttpLink } from 'apollo-link-http';
+import { ApolloClient } from 'apollo-boost'
+
+const httpLink = createHttpLink({
+  uri: 'https://api-us-east-1.graphcms.com/v2/ckeiqswoc3k3y01z1eupfd36k/master'
+})
+
+const cache = new InMemoryCache();
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache,
+})
+
+
+// client.query({
+//   query: gql`
+//     {
+//         homepageInfos{
+//             id
+//             information{
+//                 html
+//             }
+//         }
+//     }
+//   `
+// }).then(response => console.log(response.data))
+
 
 const GET_HEADER = gql`
     {
@@ -31,11 +61,39 @@ const GET_HEADER = gql`
 //       id
 //     }
 //   }
+
+// const GET_LANDING_INFO = gql`
+//     {
+//         homepageInfos{
+//             id
+//             information{
+//                 html
+//             }
+//         }
+//     }
+// `
 const Header = () => {
+    const [landInfoHtml, setLandInfoHtml] = React.useState('')
     useEffect(() => {
-        if (!document.querySelector('.landingPageContent').innerHTML) {
-            document.querySelector('.landingPageInfo').style.display = "none"
-        }
+        client.query({
+            query: gql`
+              {
+                  homepageInfos{
+                      id
+                      information{
+                          html
+                      }
+                  }
+              }
+            `
+            }).then(response => {
+                console.log(response)
+              if (response.data.homepageInfos[0].information.html !== "<p></p>") {
+                setLandInfoHtml(response.data.homepageInfos[0].information.html)
+              } else if (response.data.homepageInfos[0].information.html === "<p></p>") {
+                document.querySelector('.landingPageInfo').style.display = "none"
+              }
+          })          
     }, [])
 
     
@@ -143,7 +201,7 @@ const Header = () => {
             <div className="landingPageInfo">
                 <div>
                     <div className="landingClose"><span onClick={() => document.querySelector('.landingPageInfo').style.display = "none"}>CLOSE</span></div>
-                    <div className="landingPageContent"></div>
+                    <div dangerouslySetInnerHTML={{__html: landInfoHtml}} className="landingPageContent"/>
                 </div>
             </div>
         </header>

@@ -4,12 +4,14 @@ import { gql } from 'apollo-boost'
 import * as filestack from 'filestack-js'
 import React, { useCallback, useMemo, useState } from "react";
 import ReactDOM from 'react-dom'
-import { Editor, Transforms, createEditor, Value } from 'slate'
-import escapeHtml from 'escape-html'
-import { Node, Text } from 'slate'
-import { Slate, Editable, withReact, useSlate } from 'slate-react'
+import isUrl from 'is-url'
+import imageExtensions from 'image-extensions'
+import { Editor, Transforms, createEditor, Range } from 'slate'
+import { Slate, Editable, withReact, useSlate, useEditor, useSelected, useFocused } from 'slate-react'
 import isHotkey from 'is-hotkey'
 import { withHistory } from 'slate-history'
+import { SpinnerBig } from '../../../components/Spinner/Spinner'
+import PostPagePreview from '../../../components/PostPagePreview/PostPagePreview'
 
 import { cx, css } from 'emotion'
 const HOTKEYS = {
@@ -21,8 +23,7 @@ const HOTKEYS = {
   
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
-
-const BlogPosts = () => {
+const BlogPosts = ({ match }) => {
     
     const [filename, setFilename] = useState('')
     const [mimetype, setMimeType] = useState('')
@@ -33,12 +34,11 @@ const BlogPosts = () => {
 
     const renderElement = useCallback(props => <Element {...props} />, [])
     const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-    const editor = useMemo(() => withHistory(withReact(createEditor())), [])
+    const editor = useMemo(() => withImages(withLinks(withHistory(withReact(createEditor())))), [])
     const [value, setValue] = useState(initialValue)
     const preSlug = postHeader.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"") 
     const slug = (preSlug.replace(/[" "]/g, "-")).toLowerCase()
 
-    
     const UPLOAD_POST = gql`
       mutation ($postBody: RichTextAST!){
         createBlog(data: {
@@ -65,26 +65,40 @@ const BlogPosts = () => {
         }
       }
     `
-
-    
-
-    const handleUpload = () => {
-        const client = filestack.init('APVtbrtiShOQCtyCSy3tAz');
-        const options = {
-            onUploadDone: function(file) {
-                const { filesUploaded } = file
-                const uploadedFile = filesUploaded[0]
-                setFilename(uploadedFile.filename);
-                setHandle(uploadedFile.handle);
-                setMimeType(uploadedFile.mimetype)
-                setUrl(uploadedFile.url)
-            },
-            accept: ["image/*"],
+    const GET_ALLNEWS = gql`
+    {
+        blogs (orderBy: createdAt_DESC){
+            id
+            createdAt
+            slug
+            postTitle
+          	postPicture {
+                id
+                url
+            }
+            postBody {
+                html
+            }
         }
-        client.picker(options).open();
     }
+  `
 
-
+  
+  const handleUpload = () => {
+    const client = filestack.init('APVtbrtiShOQCtyCSy3tAz');
+    const options = {
+        onUploadDone: function(file) {
+            const { filesUploaded } = file
+            const uploadedFile = filesUploaded[0]
+            setFilename(uploadedFile.filename);
+            setHandle(uploadedFile.handle);
+            setMimeType(uploadedFile.mimetype)
+            setUrl(uploadedFile.url)
+        },
+        accept: ["image/*"],
+    }
+    client.picker(options).open();
+  }
 
     return (
         <div className="blogPostsWrap">
@@ -92,20 +106,29 @@ const BlogPosts = () => {
             <div className="blogPostsMainWrap">
                 <div className="blogEditor">
                 <div>
-                    <input type="text" name="description" placeholder="Enter the title of the post." onChange={(e) => setPostHeader(e.target.value)}/>
-                    <button onClick={handleUpload} className="saveHeader">ADD A PICTURE</button>
-                    <div className="homeImageMini" style={{backgroundImage: `url(${url})`}}/>
+                    <input type="text" className="postEditTitle" name="description" placeholder="Enter the title of the post." onChange={(e) => setPostHeader(e.target.value)}/>
+                    <button onClick={handleUpload} className="saveHeader postEditButton ">ADD A PICTURE</button>
+                    <div className="homeImageMini" style={{backgroundImage: `url(${url})`, margin: "0 auto"}}/>
                 </div>
 
                     <div className="slateEditor">
                         <Slate editor={editor} value={value} onChange={newValue => setValue(newValue)}>
                         <Toolbar>
+                            <BlockButton sel="headsel" icon="format_size" />
+                            <div className="headingFormatDefault">
+                              <BlockButton format="heading-one" icon="looks_one" />
+                              <BlockButton format="heading-two" icon="looks_two" />
+                              <BlockButton format="heading-three" icon="looks_3" />
+                              <BlockButton format="heading-four" icon="looks_4" />
+                              <BlockButton format="heading-five" icon="looks_5" />
+                              <BlockButton format="heading-six" icon="looks_6" />
+                            </div>
                             <MarkButton format="bold" icon="format_bold" />
                             <MarkButton format="italic" icon="format_italic" />
                             <MarkButton format="underline" icon="format_underlined" />
                             <MarkButton format="code" icon="code" />
-                            <BlockButton format="heading-one" icon="looks_one" />
-                            <BlockButton format="heading-two" icon="looks_two" />
+                            <LinkButton />
+                            <InsertImageButton />
                             <BlockButton format="block-quote" icon="format_quote" />
                             <BlockButton format="numbered-list" icon="format_list_numbered" />
                             <BlockButton format="bulleted-list" icon="format_list_bulleted" />
@@ -113,7 +136,7 @@ const BlogPosts = () => {
                         <Editable 
                             renderElement={renderElement}
                             renderLeaf={renderLeaf}
-                            placeholder="Enter some rich text…"
+                            placeholder="Enter some text…"
                             spellCheck
                             autoFocus
                             onKeyDown={event => {
@@ -146,20 +169,35 @@ const BlogPosts = () => {
                                     
                                 }
                                 }
-                                className="saveHeader">SAVE</button>
+                                className="saveHeader postEditButton">SAVE</button>
                             )
                         }
                     </Mutation>
                 </div>
                 <div className="postsPreview">
-                    THIS IS WHERE A PREVIEW OF THE BLOGPOSTS WILL BE DISPLAYED
-                    {/* <pre>{serializer.serialize(value)}</pre> */}
+                  <Query query={GET_ALLNEWS}>
+                      {
+                          ({ loading, data }) => {
+                              if (loading) return <SpinnerBig/>
+                              return (
+                                  data.blogs.map(({ id, createdAt, postTitle, slug, postPicture: { url }, postBody: { html }}) => {
+                                      return (
+                                          <PostPagePreview key={id} match={match} date={createdAt} slug={slug} title={postTitle} imageUrl={url} body={html}/>
+                                      )
+                                  })
+                              )
+                          }
+                      }
+                  </Query>
                 </div>
             </div>
         </div>
     )
-}
-
+  }
+  const toggleHead = () => {
+    document.querySelector('.headingFormatDefault').classList.toggle('headingFormat')
+  }
+  
 const toggleBlock = (editor, format) => {
     const isActive = isBlockActive(editor, format)
     const isList = LIST_TYPES.includes(format)
@@ -202,7 +240,8 @@ const toggleBlock = (editor, format) => {
     return marks ? marks[format] === true : false
   }
   
-  const Element = ({ attributes, children, element }) => {
+  const Element = ( props ) => {
+    const { attributes, children, element } = props
     switch (element.type) {
       case 'block-quote':
         return <blockquote {...attributes}>{children}</blockquote>
@@ -212,10 +251,22 @@ const toggleBlock = (editor, format) => {
         return <h1 {...attributes}>{children}</h1>
       case 'heading-two':
         return <h2 {...attributes}>{children}</h2>
+      case 'heading-three':
+        return <h3 {...attributes}>{children}</h3>
+      case 'heading-four':
+        return <h4 {...attributes}>{children}</h4>
+      case 'heading-five':
+        return <h5 {...attributes}>{children}</h5>
+      case 'heading-six':
+        return <h6 {...attributes}>{children}</h6>  
       case 'list-item':
         return <li {...attributes}>{children}</li>
       case 'numbered-list':
         return <ol {...attributes}>{children}</ol>
+      case 'link':
+        return <a {...attributes} href={element.url}> {children} </a>
+      case 'image':
+        return <ImageElement {...props} />
       default:
         return <p {...attributes}>{children}</p>
     }
@@ -241,7 +292,7 @@ const toggleBlock = (editor, format) => {
     return <span {...attributes}>{children}</span>
   }
   
-  const BlockButton = ({ format, icon }) => {
+  const BlockButton = ({ format, icon, sel }) => {
     const editor = useSlate()
     return (
       <Button
@@ -249,6 +300,9 @@ const toggleBlock = (editor, format) => {
         onMouseDown={event => {
           event.preventDefault()
           toggleBlock(editor, format)
+          if (sel === "headsel") {
+            toggleHead()
+          }
         }}
       >
         <Icon>{icon}</Icon>
@@ -271,6 +325,67 @@ const toggleBlock = (editor, format) => {
     )
   }
   
+  const LinkButton = () => {
+    const editor = useSlate()
+    return (
+      <Button
+        active={isLinkActive(editor)}
+        onMouseDown={event => {
+          event.preventDefault()
+          const url = window.prompt('Enter the URL of the link:')
+          if (!url) return
+          insertLink(editor, url)
+        }}
+      >
+        <Icon>link</Icon>
+      </Button>
+    )
+  }
+
+  const ImageElement = ({ attributes, children, element }) => {
+    const selected = useSelected()
+    const focused = useFocused()
+    return (
+      <div {...attributes}>
+        <div contentEditable={false}>
+          <img
+            src={element.url}
+            className={css`
+              display: block;
+              max-width: 100%;
+              max-height: 20em;
+              box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
+            `}
+          />
+        </div>
+        {children}
+      </div>
+    )
+  }
+
+  const InsertImageButton = () => {
+    const editor = useEditor()
+    return (
+      <Button
+        onMouseDown={event => {
+          event.preventDefault()
+          const url = window.prompt('Enter the URL of the image:')
+          if (!url) return
+          insertImage(editor, url)
+        }}
+      >
+        <Icon>image</Icon>
+      </Button>
+    )
+  }
+
+  const isImageUrl = url => {
+    if (!url) return false
+    if (!isUrl(url)) return false
+    const ext = new URL(url).pathname.split('.').pop()
+    return imageExtensions.includes(ext)
+  }
+
 const initialValue = [
     {
         type: 'paragraph',
@@ -308,8 +423,113 @@ const initialValue = [
     },
 ]
 
+const withLinks = editor => {
+  const { insertData, insertText, isInline } = editor
+
+  editor.isInline = element => {
+    return element.type === 'link' ? true : isInline(element)
+  }
+
+  editor.insertText = text => {
+    if (text && isUrl(text)) {
+      wrapLink(editor, text)
+    } else {
+      insertText(text)
+    }
+  }
+
+  editor.insertData = data => {
+    const text = data.getData('text/plain')
+
+    if (text && isUrl(text)) {
+      wrapLink(editor, text)
+    } else {
+      insertData(data)
+    }
+  }
+
+  return editor
+}
+
+const insertLink = (editor, url) => {
+  if (editor.selection) {
+    wrapLink(editor, url)
+  }
+}
+
+const isLinkActive = editor => {
+  const [link] = Editor.nodes(editor, { match: n => n.type === 'link' })
+  return !!link
+}
+
+const unwrapLink = editor => {
+  Transforms.unwrapNodes(editor, { match: n => n.type === 'link' })
+}
+
+const wrapLink = (editor, url) => {
+  if (isLinkActive(editor)) {
+    unwrapLink(editor)
+  }
+
+  const { selection } = editor
+  const isCollapsed = selection && Range.isCollapsed(selection)
+  const link = {
+    type: 'link',
+    url,
+    children: isCollapsed ? [{ text: url }] : [],
+  }
+
+  if (isCollapsed) {
+    Transforms.insertNodes(editor, link)
+  } else {
+    Transforms.wrapNodes(editor, link, { split: true })
+    Transforms.collapse(editor, { edge: 'end' })
+  }
+}
+
+const withImages = editor => {
+  const { insertData, isVoid } = editor
+
+  editor.isVoid = element => {
+    return element.type === 'image' ? true : isVoid(element)
+  }
+
+  editor.insertData = data => {
+    const text = data.getData('text/plain')
+    const { files } = data
+
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const reader = new FileReader()
+        const [mime] = file.type.split('/')
+
+        if (mime === 'image') {
+          reader.addEventListener('load', () => {
+            const url = reader.result
+            insertImage(editor, url)
+          })
+
+          reader.readAsDataURL(file)
+        }
+      }
+    } else if (isImageUrl(text)) {
+      insertImage(editor, text)
+    } else {
+      insertData(data)
+    }
+  }
+
+  return editor
+}
+
+const insertImage = (editor, url) => {
+  const text = { text: '' }
+  const image = { type: 'image', url, children: [text] }
+  Transforms.insertNodes(editor, image)
+}
+
 const Button = React.forwardRef(
-    ({ className, active, reversed, ...props }, ref) => (
+    ({ className, active, reversed, ...props }, ref ) => (
       <span
         {...props}
         ref={ref}
@@ -319,11 +539,12 @@ const Button = React.forwardRef(
             cursor: pointer;
             color: ${reversed
               ? active
-                ? 'white'
-                : '#aaa'
+                ? 'rgb(102, 99, 253)'
+                : 'rgb(98, 110, 153)'
               : active
-              ? 'black'
-              : '#ccc'};
+              ? 'rgb(102, 99, 253)'
+              : 'rgb(98, 110, 153)'
+            }
           `
         )}
       />
@@ -415,7 +636,7 @@ const Menu = React.forwardRef(({ className, ...props }, ref) => (
       className={cx(
         className,
         css`
-          & > * {
+          & > *:not(.headingFormatDefault) {
             display: inline-block;
           }
           & > * + * {
@@ -446,181 +667,5 @@ const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
       )}
     />
   ))
-
-  const BLOCK_TAGS = {
-    p: 'paragraph',
-    a: 'link',
-    li: 'list-item',
-    ul: 'bulleted-list',
-    ol: 'numbered-list',
-    blockquote: 'quote',
-    pre: 'code',
-    h1: 'heading-one',
-    h2: 'heading-two',
-    h3: 'heading-three',
-    h4: 'heading-four',
-    h5: 'heading-five',
-    h6: 'heading-six',
-  };
-  
-  // Add a dictionary of mark tags.
-  const MARK_TAGS = {
-    strong: 'bold',
-    em: 'italic',
-    u: 'underlined',
-    s: 'strikethrough',
-    code: 'code',
-    span: 'color',
-  };
-  
-  const RULES = [
-    {
-      // Special case for links, to grab their href.
-      deserialize(el, next) {
-        if (el.tagName.toLowerCase() === 'a') {
-          return {
-            object: 'inline',
-            type: 'link',
-            nodes: next(el.childNodes),
-            data: {
-              href: el.getAttribute('href'),
-            },
-          };
-        }
-      },
-      serialize(obj, children) {
-        if (obj.object === 'inline') {
-          switch (obj.type) {
-            case 'link':
-              const { data } = obj;
-              const href = data.get('href');
-              return <a href={href}>{children}</a>;
-            default:
-              return <span>{children}</span>;
-          }
-        }
-      },
-    },
-    {
-      deserialize(el, next) {
-        const type = BLOCK_TAGS[el.tagName.toLowerCase()];
-  
-        if (el.tagName.toLowerCase() === 'img') {
-          return {
-            object: 'block',
-            type: 'image',
-            nodes: next(el.childNodes),
-            data: {
-              src: el.getAttribute('src'),
-            },
-          };
-        } else if (el.tagName.toLowerCase() === 'iframe') {
-          return {
-            object: 'block',
-            type: 'video',
-            nodes: next(el.childNodes),
-            data: {
-              video: el.getAttribute('src'),
-            },
-          };
-        }
-  
-        if (type) {
-          return {
-            object: 'block',
-            type: type,
-            data: {
-              className: el.getAttribute('class'),
-              style: el.getAttribute('style'),
-            },
-            nodes: next(el.childNodes),
-          };
-        }
-      },
-      serialize(obj, children) {
-        if (obj.object === 'block') {
-          switch (obj.type) {
-            case 'heading-one':
-              return <h1>{children}</h1>;
-            case 'heading-two':
-              return <h2>{children}</h2>;
-            case 'align-left':
-              console.log(obj);
-              return <div style={{ textAlign: 'left' }}>{children}</div>;
-            case 'align-center':
-              return <div style={{ textAlign: 'center' }}>{children}</div>;
-            case 'align-right':
-              return <div style={{ textAlign: 'right' }}>{children}</div>;
-            case 'align-justify':
-              return <div style={{ textAlign: 'justify' }}>{children}</div>;
-            case 'bulleted-list':
-              return <ul>{children}</ul>;
-            case 'numbered-list':
-              return <ol>{children}</ol>;
-            case 'list-item':
-              return <li>{children}</li>;
-            case 'image':
-              const src = obj.data.get('src');
-              return <img src={src} />;
-            case 'video':
-              const video = obj.data.get('video');
-              return (
-                <iframe
-                  id="ytplayer"
-                  type="text/html"
-                  width="640"
-                  height="360"
-                  src={video}
-                  frameBorder="0"
-                />
-              );
-            case 'block-quote':
-              return <blockquote>{children}</blockquote>;
-            case 'code':
-              return (
-                <pre>
-                  <code>{children}</code>
-                </pre>
-              );
-            case 'paragraph':
-              return <p className={obj.data.get('className')}>{children}</p>;
-            case 'quote':
-              return <blockquote>{children}</blockquote>;
-          }
-        }
-      },
-    },
-    // Add a new rule that handles marks...
-    {
-      deserialize(el, next) {
-        const type = MARK_TAGS[el.tagName.toLowerCase()];
-        if (type) {
-          return {
-            object: 'mark',
-            type: type,
-            nodes: next(el.childNodes),
-          };
-        }
-      },
-      serialize(obj, children) {
-        if (obj.object === 'mark') {
-          switch (obj.type) {
-            case 'bold':
-              return <strong>{children}</strong>;
-            case 'italic':
-              return <em>{children}</em>;
-            case 'code':
-              return <code>{children}</code>;
-            case 'underlined':
-              return <u>{children}</u>;
-          }
-        }
-      },
-    },
-  ];
-  
-//   const serializer = new Html({ rules: RULES });
-  
-
 
 export default BlogPosts

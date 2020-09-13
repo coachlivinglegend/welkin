@@ -5,6 +5,7 @@ import HomeHeader from './HomeHeader/HomeHeader'
 import HomeGallery from './HomeGallery/HomeGallery'
 import GalleryPage from './GalleryPage/GalleryPage'
 import BlogPosts from './BlogPosts/BlogPosts'
+import LandingPageInfo from './LandingPageInfo/LandingPageInfo'
 import HamburgerMenu from 'react-hamburger-menu'
 import { Link } from 'react-router-dom'
 
@@ -12,8 +13,8 @@ import { Link } from 'react-router-dom'
 
 
 const AdminDashboard = () => {
-    const [navRoute, setNavRoute] = useState('')
-    const [isSelected, setIsSelected] = useState(0)
+    const [navRoute, setNavRoute] = useState('header')
+    const [isSelected, setIsSelected] = useState(1)
     const [isOpen, setIsOpen] = useState(false)
 
 
@@ -37,6 +38,12 @@ const AdminDashboard = () => {
                         <GalleryPage/>
                     </div>
                 )
+            case "land":
+                return (
+                    <div>
+                        <LandingPageInfo/>
+                    </div>
+                )
             case "blog":
                 return (
                     <div>
@@ -45,9 +52,7 @@ const AdminDashboard = () => {
                 )
             default: 
                 return (
-                    <div>
-                    sdfghjklkjhgfdfghjkl;kjhgf
-                    </div>
+                    <div/>
                 )
         }
     }
@@ -99,8 +104,8 @@ const AdminDashboard = () => {
                             <div onClick={() => handleNavClick('blog', 4)} className={`adminMenuItem ${isSelected === 4 ? 'adminActive' : '' }`}>
                                 BLOG POSTS
                             </div>
-                            <div onClick={() => handleNavClick('header', 5)} className={`adminMenuItem ${isSelected === 5 ? 'adminActive' : '' }`}>
-                                HOME HEADER
+                            <div onClick={() => handleNavClick('land', 5)} className={`adminMenuItem ${isSelected === 5 ? 'adminActive' : '' }`}>
+                                LANDING PAGE INFO
                             </div>
                         </div>
                 </div>

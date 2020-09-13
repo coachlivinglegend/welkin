@@ -12,6 +12,7 @@ import Welkinpedia from './pages/Welkinpedia/Welkinpedia'
 import ContactUs from './pages/ContactUs/ContactUs'
 import Portal from './pages/Portal/Portal'
 import Admin from './pages/Admin/Admin'
+import AdminRegister from './pages/Admin/AdminRegister/AdminRegister'
 
 
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/contactus' component ={ContactUs}/>
           <Route path='/portal' component ={Portal}/>
           <Route path ='/admin' component ={Admin}/>
+          <Route path ='/admin-register' component ={AdminRegister}/>
         </Switch>
     </div>
   );
