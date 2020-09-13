@@ -161,11 +161,7 @@ const BlogPosts = ({ match }) => {
                                 onClick={(e) => {
                                     const ast = value[0]
                                     e.preventDefault();
-                                    // console.log(value[0])
-                                    // console.log(editor)
                                     uploadPost()
-                                    console.log(value)
-                                    // console.log(initialValue)
                                     
                                 }
                                 }
@@ -365,13 +361,33 @@ const toggleBlock = (editor, format) => {
 
   const InsertImageButton = () => {
     const editor = useEditor()
+    let url;
+    let mimetype;
+    let width;
+    let handle;
+    let height;
+    let title;
     return (
       <Button
         onMouseDown={event => {
           event.preventDefault()
-          const url = window.prompt('Enter the URL of the image:')
-          if (!url) return
-          insertImage(editor, url)
+          // const url = window.prompt('Enter the URL of the image:')
+          const client = filestack.init('APVtbrtiShOQCtyCSy3tAz');
+          const options = {
+            onUploadDone: function(file) {
+                const { filesUploaded } = file
+                const uploadedFile = filesUploaded[0]
+                title = uploadedFile.filename;
+                handle = uploadedFile.handle;
+                mimetype = uploadedFile.mimetype;
+                url = uploadedFile.url;
+                width = uploadedFile.width;
+                height= uploadedFile.height;
+            insertImage(editor, url, title, handle, mimetype, width, height)
+            },
+            accept: ["image/*"],
+          }
+        client.picker(options).open();
         }}
       >
         <Icon>image</Icon>
@@ -524,7 +540,7 @@ const withImages = editor => {
 
 const insertImage = (editor, url) => {
   const text = { text: '' }
-  const image = { type: 'image', url, children: [text] }
+  const image = { type: 'image', src: url, title, handle, mimetype, width, height, children: [text] }
   Transforms.insertNodes(editor, image)
 }
 
