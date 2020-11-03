@@ -12,14 +12,14 @@ import isHotkey from 'is-hotkey'
 import { withHistory } from 'slate-history'
 import { SpinnerBig } from '../../../components/Spinner/Spinner'
 import PostPagePreview from '../../../components/PostPagePreview/PostPagePreview'
-
 import { cx, css } from 'emotion'
+
 const HOTKEYS = {
     'mod+b': 'bold',
     'mod+i': 'italic',
     'mod+u': 'underline',
     'mod+`': 'code',
-  }
+}
   
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
@@ -83,13 +83,13 @@ const BlogPosts = ({ match }) => {
     }
   `
 
-  
   const handleUpload = () => {
     const client = filestack.init('APVtbrtiShOQCtyCSy3tAz');
     const options = {
         onUploadDone: function(file) {
             const { filesUploaded } = file
             const uploadedFile = filesUploaded[0]
+            console.log(uploadedFile)
             setFilename(uploadedFile.filename);
             setHandle(uploadedFile.handle);
             setMimeType(uploadedFile.mimetype)
@@ -105,23 +105,24 @@ const BlogPosts = ({ match }) => {
             BlogPosts
             <div className="blogPostsMainWrap">
                 <div className="blogEditor">
-                <div>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <input type="text" className="postEditTitle" name="description" placeholder="Enter the title of the post." onChange={(e) => setPostHeader(e.target.value)}/>
                     <button onClick={handleUpload} className="saveHeader postEditButton ">ADD A PICTURE</button>
                     <div className="homeImageMini" style={{backgroundImage: `url(${url})`, margin: "0 auto"}}/>
                 </div>
-
                     <div className="slateEditor">
                         <Slate editor={editor} value={value} onChange={newValue => setValue(newValue)}>
                         <Toolbar>
-                            <BlockButton sel="headsel" icon="format_size" />
-                            <div className="headingFormatDefault">
-                              <BlockButton format="heading-one" icon="looks_one" />
-                              <BlockButton format="heading-two" icon="looks_two" />
-                              <BlockButton format="heading-three" icon="looks_3" />
-                              <BlockButton format="heading-four" icon="looks_4" />
-                              <BlockButton format="heading-five" icon="looks_5" />
-                              <BlockButton format="heading-six" icon="looks_6" />
+                            <div style={{position: "relative"}}>
+                              <BlockButton sel="headsel" icon="format_size" />
+                              <div className="headingFormatDefault">
+                                <BlockButton format="heading-one" icon="looks_one" />
+                                <BlockButton format="heading-two" icon="looks_two" />
+                                <BlockButton format="heading-three" icon="looks_3" />
+                                <BlockButton format="heading-four" icon="looks_4" />
+                                <BlockButton format="heading-five" icon="looks_5" />
+                                <BlockButton format="heading-six" icon="looks_6" />
+                              </div>
                             </div>
                             <MarkButton format="bold" icon="format_bold" />
                             <MarkButton format="italic" icon="format_italic" />
@@ -149,7 +150,7 @@ const BlogPosts = ({ match }) => {
                             }
                             }}
                         />
-                        </Slate>
+                      </Slate>
                     </div>
                     <Mutation mutation={UPLOAD_POST} 
                       variables={ 
@@ -345,7 +346,8 @@ const toggleBlock = (editor, format) => {
       <div {...attributes}>
         <div contentEditable={false}>
           <img
-            src={element.url}
+            // src={element.url}
+            src={element.src}
             className={css`
               display: block;
               max-width: 100%;
@@ -363,15 +365,15 @@ const toggleBlock = (editor, format) => {
     const editor = useEditor()
     let url;
     let mimetype;
-    let width;
     let handle;
-    let height;
     let title;
     return (
       <Button
         onMouseDown={event => {
           event.preventDefault()
           // const url = window.prompt('Enter the URL of the image:')
+          // if (!url) return
+          // insertImage(editor, url, title, handle, mimetype)
           const client = filestack.init('APVtbrtiShOQCtyCSy3tAz');
           const options = {
             onUploadDone: function(file) {
@@ -381,9 +383,8 @@ const toggleBlock = (editor, format) => {
                 handle = uploadedFile.handle;
                 mimetype = uploadedFile.mimetype;
                 url = uploadedFile.url;
-                width = uploadedFile.width;
-                height= uploadedFile.height;
-            insertImage(editor, url, title, handle, mimetype, width, height)
+            if (!url) return
+            insertImage(editor, url, title, handle, mimetype)
             },
             accept: ["image/*"],
           }
@@ -521,7 +522,8 @@ const withImages = editor => {
 
         if (mime === 'image') {
           reader.addEventListener('load', () => {
-            const url = reader.result
+            const url = reader.result;
+            console.log('this is from the insertData withImages')
             insertImage(editor, url)
           })
 
@@ -538,11 +540,17 @@ const withImages = editor => {
   return editor
 }
 
-const insertImage = (editor, url) => {
+const insertImage = (editor, url, title, handle, mimetype) => {
   const text = { text: '' }
-  const image = { type: 'image', src: url, title, handle, mimetype, width, height, children: [text] }
+  const image = { type: 'image', src: url, title, handle, mimetype, children: [text] }
   Transforms.insertNodes(editor, image)
 }
+
+// const insertImage = (editor, url) => {
+//   const text = { text: '' }
+//   const image = { type: 'image', url, children: [text] }
+//   Transforms.insertNodes(editor, image)
+// }
 
 const Button = React.forwardRef(
     ({ className, active, reversed, ...props }, ref ) => (
@@ -679,6 +687,8 @@ const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
           margin: 0 -20px;
           border-bottom: 2px solid #eee;
           margin-bottom: 20px;
+          display: flex;
+          justify-content: space-around;
         `
       )}
     />

@@ -87,7 +87,6 @@ const Header = () => {
               }
             `
             }).then(response => {
-                console.log(response)
               if (response.data.homepageInfos[0].information.html !== "<p></p>") {
                 setLandInfoHtml(response.data.homepageInfos[0].information.html)
               } else if (response.data.homepageInfos[0].information.html === "<p></p>") {
@@ -107,6 +106,14 @@ const Header = () => {
             document.querySelector('.topHeaderWrapper').style.display = 'block'
                 document.querySelector('.navWrapper').classList.remove('navFixed')
         }
+
+        if (window.pageYOffset > 250) {
+            document.querySelector('.scrollToTop').classList.add('showScroll');
+        }
+        if (window.pageYOffset < 250) {
+            document.querySelector('.scrollToTop').classList.remove('showScroll');
+        }
+
       });
     
     const handleOpen = () => {
@@ -204,6 +211,10 @@ const Header = () => {
                     <div dangerouslySetInnerHTML={{__html: landInfoHtml}} className="landingPageContent"/>
                 </div>
             </div>
+            <div onClick={() => window.scrollTo({top: 0, behavior: "smooth"})} className="scrollToTop">
+                <span><i className="fas fa-arrow-up fa-2x"></i></span>
+            </div>
+
         </header>
     )
 }

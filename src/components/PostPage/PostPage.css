@@ -133,6 +133,12 @@
     max-width: 920px;
 }
 
+.postContent img {
+    max-height: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
 .postContent p {
     margin: 0 0 1.5em;
     font-size: 0.64em;

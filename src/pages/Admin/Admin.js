@@ -4,32 +4,30 @@ import TextField from '@material-ui/core/TextField';
 import AdminDashboard from '../AdminDashboard/AdminDashboard'
 import logo from '../../assets/logo.png'
 import { InMemoryCache } from 'apollo-cache-inmemory';
-
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloClient, gql } from 'apollo-boost'
 import bcrypt from 'bcryptjs';
-
+import { Link } from 'react-router-dom';
 
 const httpLink = createHttpLink({
     uri: 'https://api-us-east-1.graphcms.com/v2/ckeiqswoc3k3y01z1eupfd36k/master'
-  })
+})
   
-  const cache = new InMemoryCache();
+const cache = new InMemoryCache();
   
-  const client = new ApolloClient({
+const client = new ApolloClient({
     link: httpLink,
     cache,
-  })
+})
   
-
-
 const Admin = () => {
     const [username, setName] = useState('')
     const [password, setPassword] = useState('')
-    const [isCorrect, setIsCorrect] = useState(true)
+    const [isCorrect, setIsCorrect] = useState(false)
     const [userArray, setUserArray] = useState([])
+    const [currentUser, setCurrentUser] = useState([])
     useEffect(() => {
-            document.title = "Admin Login - Welkin International School";
+        document.title = "Admin Login - Welkin International School";
         client.query({
             query: gql`
                 {
@@ -43,27 +41,27 @@ const Admin = () => {
         }).then(response => setUserArray(response.data.users))
     }, [])
 
-    
     const formSubmit = (e) => {
         e.preventDefault();
         for (const user of userArray) {
-            console.log(bcrypt.compareSync(password, user.password))
             if (username === user.username && bcrypt.compareSync(password, user.password)) {
                 setIsCorrect(true);
                 document.title = "Admin Dashboard - Welkin International School"
+                setCurrentUser(user)
+                setName('')
+                setPassword('')
                 return
             }
         }
         alert('who goes there?')
     }
-    
-    
+
     return (
         <div className="adminContainer">
             {  isCorrect 
                 ?
                 <div className="adminDashWrapper">
-                    <AdminDashboard/>
+                    <AdminDashboard user={currentUser}/>
                 </div>
                 :
                 <div className="adminWP">
@@ -74,12 +72,12 @@ const Admin = () => {
                         <TextField className="test" id="standard-basic" label="Password" required type="password" value={password} onChange={e => setPassword(e.target.value)}/>
                         <input className="btnn" type="submit" value="LOG IN"/>
                     </form>
-                    <span style={{alignSelf: "flex-start"}}><i class="fa fa-arrow-left" aria-hidden="true"/> Back to Welkin International School</span>
+                    <Link to='/' className='readLink'>
+                        <span style={{alignSelf: "flex-start"}}><i className="fa fa-arrow-left" aria-hidden="true"/> Back to Welkin International School</span>
+                    </Link>
                 </div>
-                </div>
-    
+                </div>    
             }
-
         </div>
     )
 }

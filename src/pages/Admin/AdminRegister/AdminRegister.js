@@ -9,14 +9,14 @@ import { ApolloClient, gql } from 'apollo-boost'
 
 const httpLink = createHttpLink({
     uri: 'https://api-us-east-1.graphcms.com/v2/ckeiqswoc3k3y01z1eupfd36k/master'
-  })
+})
   
   const cache = new InMemoryCache();
   
   const client = new ApolloClient({
     link: httpLink,
     cache,
-  })
+})
   
 const AdminRegister = () => {
     const [username, setName] = useState('')
@@ -68,7 +68,7 @@ const AdminRegister = () => {
                         <TextField className="test" id="standard-basic" label="Password" required type="password" value={password} onChange={e => setPassword(e.target.value)}/>
                         <input className="btnn" type="submit" value="REGISTER"/>
                     </form>
-                    <span style={{alignSelf: "flex-start"}}><i class="fa fa-arrow-left" aria-hidden="true"/> Back to Welkin International School</span>
+                    <span style={{alignSelf: "flex-start"}}><i className="fa fa-arrow-left" aria-hidden="true"/> Back to Welkin International School</span>
                 </div>
                 </div>
         </div>

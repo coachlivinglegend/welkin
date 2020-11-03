@@ -8,15 +8,13 @@ import BlogPosts from './BlogPosts/BlogPosts'
 import LandingPageInfo from './LandingPageInfo/LandingPageInfo'
 import HamburgerMenu from 'react-hamburger-menu'
 import { Link } from 'react-router-dom'
+import AdminRegister from '../Admin/AdminRegister/AdminRegister';
 
 
-
-
-const AdminDashboard = () => {
-    const [navRoute, setNavRoute] = useState('header')
-    const [isSelected, setIsSelected] = useState(1)
+const AdminDashboard = ({user}) => {
+    const [navRoute, setNavRoute] = useState('')
+    const [isSelected, setIsSelected] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
-
 
     const navRenderSwitch = (navRoute) => {
         switch(navRoute) {
@@ -50,16 +48,22 @@ const AdminDashboard = () => {
                         <BlogPosts/>
                     </div>
                 )
-            default: 
+            case "register":
                 return (
-                    <div/>
+                    <div>
+                        <AdminRegister/>
+                    </div>
                 )
+            default: 
+            return (
+                <div/>
+            )
         }
     }
 
-    const handleNavClick = (route, selected) => {
-        setNavRoute(route)
-        setIsSelected(selected)
+    function handleNavClick(route, selected) {
+        setNavRoute(route);
+        setIsSelected(selected);
     }
 
     const handleOpen = () => {
@@ -68,8 +72,7 @@ const AdminDashboard = () => {
         document.querySelector('.adminLogo').classList.toggle('toggleAdminLogo')
         document.querySelector('.adminMain').classList.toggle('toggleAdminMain')
     }
-
-
+    console.log(user)
     return (
         <div>
             <div className="adminNavMobile">
@@ -107,6 +110,19 @@ const AdminDashboard = () => {
                             <div onClick={() => handleNavClick('land', 5)} className={`adminMenuItem ${isSelected === 5 ? 'adminActive' : '' }`}>
                                 LANDING PAGE INFO
                             </div>
+                            {   
+                                user.username === "administrator"
+                                ?
+                                <div onClick={() => handleNavClick('register', 6)} className={`adminMenuItem ${isSelected === 6 ? 'adminActive' : '' }`}>
+                                    ADMIN REGISTER
+                                </div>
+                                :
+                                null
+                            }
+                            <div style={{marginTop: "auto"}} className='adminMenuItem' onClick={() => window.location.reload()}>
+                                LOG OUT
+                            </div>
+
                         </div>
                 </div>
                 <div className="adminMain">

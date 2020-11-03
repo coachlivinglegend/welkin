@@ -204,7 +204,7 @@ const HomeGallery = () => {
                                                                         <i onClick={() => {
                                                                             // deletePicture();
                                                                             afterDel(id)
-                                                                        }} class="fas fa-trash iconDel"></i>                                                                        
+                                                                        }} className="fas fa-trash iconDel"></i>                                                                        
                                                                     )
                                                                 }
                                                             </Mutation>
