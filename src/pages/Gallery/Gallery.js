@@ -8,14 +8,18 @@ import Footer from '../../components/Footer/Footer'
 
 const GalleryPage = () => {
     const [imagesToLoop, setImagesToLoop] = useState([])
+    const [allImages, setAllImages] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    useEffect(() => {
+    const [manyPages, setManyPages] = useState(0)
+    const [numPage, setNumPages] = useState([])
 
+    useEffect(() => {
         document.title = "Gallery - Welkin International School";
         function randomIntFromInterval(min, max) { // min and max included 
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
-        fetch('https://morning-wildwood-23550.herokuapp.com/')
+        fetch('http://localhost:3001/')
+        // fetch('https://morning-wildwood-23550.herokuapp.com/')
         .then(response => response.json())
         .then(data => {
             const imagesArray = data.resources.map(resource => {
@@ -26,11 +30,36 @@ const GalleryPage = () => {
                     thumbnailHeight: randomIntFromInterval(200, 300)
                 })
             })
-            setImagesToLoop(imagesArray)
+            setAllImages(imagesArray)
             setIsLoading(false)
+            setManyPages(Math.ceil(imagesArray.length / 20))
+            const pages = Math.ceil(imagesArray.length / 20)
+            const theA = []
+            for (let i = 0; i < pages; i++) {
+                theA.push({
+                    page: `Page ${i+1}`,
+                    start: 0 + 20*i,
+                    end: 19 + 20*i
+                })
+            }
+            setNumPages(theA)
         })
-}, [])
+    }, [])
+    
+    const pagination = (start, end) => {
+        const currentImg = allImages.filter((img, i) => {
+            if (i >= start && i <=end) {
+                return img
+            }
+            return
+        })
+        setImagesToLoop(currentImg)
+    }
+    useEffect(() => {
+        pagination(0, 19)
+    }, [allImages])
 
+    
     return (
         <div>
         <Header/>
@@ -44,9 +73,13 @@ const GalleryPage = () => {
                 <Gallery images={imagesToLoop}/>
             }
         </div>
+        <div className="pageNumber">
+            {
+                numPage.map(page => <div onClick={() => pagination(page.start, page.end)} className="pageNumberItem">{page.page}</div>)
+            }
+        </div>
         <Footer/>
         </div>
-
     )
 }
 
