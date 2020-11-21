@@ -1,6 +1,7 @@
 {
   "name": "welkin",
   "version": "0.1.0",
+  "homepage": "welkincollege.com.ng",
   "private": true,
   "dependencies": {
     "-": "0.0.1",
